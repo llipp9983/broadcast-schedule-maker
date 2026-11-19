@@ -1,0 +1,142 @@
+/* ───── 공통: 사진 슬롯 ───── */
+.canvas .sparkle { position: absolute; pointer-events: none; }
+.slot { position: absolute; }
+.slot-clip { position: absolute; inset: 0; overflow: hidden; background: color-mix(in srgb, var(--accent) 18%, #fff); cursor: move; }
+.slot-clip img { position: absolute; max-width: none; pointer-events: none; }
+.slot-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 700; color: var(--accent); opacity: .55; pointer-events: none; }
+.slot-sel { position: absolute; outline: 3px dashed #fff; box-shadow: 0 0 0 1px #0007; pointer-events: none; z-index: 30; }
+.slot-sel .handle { pointer-events: auto; z-index: 31; }
+.nw1, .t3-text, .t4-text, .t5-text, .t6-line span, .t8-text, .t10-bar { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+/* ───── 템플릿 3 · 큐티 핑크 ───── */
+.t3 { background-color: var(--bg); background-image: repeating-linear-gradient(45deg, transparent 0 46px, rgba(255,255,255,.07) 46px 49px), repeating-linear-gradient(-45deg, transparent 0 46px, rgba(255,255,255,.07) 46px 49px); }
+.t3-frame { position: absolute; inset: -16px; border: 16px solid var(--accent); border-radius: 62px; box-shadow: inset 0 0 0 8px #fff, 0 0 0 6px #fff; pointer-events: none; }
+.t3-name { position: absolute; left: 50%; bottom: -44px; transform: translateX(-50%); background: #fff; color: var(--accent); border: 6px solid var(--accent); border-radius: 50px; padding: 4px 40px; font: 400 44px 'Jua'; white-space: nowrap; pointer-events: none; }
+.t3-panel { position: absolute; left: 900px; top: 70px; width: 960px; height: 950px; background: var(--panel); border: 10px solid var(--accent); border-radius: 56px; box-shadow: 0 0 0 8px #fff; }
+.t3-title { position: absolute; left: 50%; top: -52px; transform: translateX(-50%); background: var(--accent); color: #fff; font: 400 84px/1.3 'Jua'; padding: 0 56px; border-radius: 60px; border: 8px solid #fff; white-space: nowrap; text-shadow: 4px 4px 0 rgba(0,0,0,.15); }
+.t3-badge { position: absolute; left: 0; right: 0; top: 76px; text-align: center; font: 400 34px 'Jua'; color: var(--accent); }
+.t3-rows { position: absolute; left: 40px; right: 40px; top: 140px; bottom: 36px; display: flex; flex-direction: column; gap: 14px; }
+.t3-row { flex: 1; display: flex; align-items: center; gap: 22px; background: #fff; border: 5px solid var(--accent); border-radius: 60px; padding: 0 20px; }
+.t3-day { width: 104px; height: 62px; border-radius: 40px; color: #fff; font: 400 32px 'Jua'; display: flex; align-items: center; justify-content: center; }
+.t3-text { flex: 1; font: 400 38px 'Jua'; color: var(--text); }
+.t3-time { font: 400 32px 'Jua'; color: var(--accent); border: 4px solid var(--accent); border-radius: 30px; padding: 2px 20px; background: var(--panel); }
+
+/* ───── 템플릿 4 · 스카이 클라우드 ───── */
+.t4 { background: linear-gradient(180deg, #fff 0%, var(--bg) 55%); }
+.t4-band { position: absolute; left: -200px; top: -100px; width: 700px; height: 1300px; background: rgba(255,255,255,.4); transform: skewX(-18deg); }
+.t4-band.b2 { left: 900px; width: 380px; background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.t4-clouds { position: absolute; left: 0; top: 0; pointer-events: none; }
+.t4-title { position: absolute; left: 70px; top: 30px; font: 900 124px/1 'Montserrat'; color: #fff; -webkit-text-stroke: 14px var(--accent); paint-order: stroke fill; letter-spacing: 4px; }
+.t4-rows { position: absolute; left: 50px; top: 190px; display: flex; flex-direction: column; gap: 22px; }
+.t4-row { width: 960px; height: 86px; display: flex; align-items: center; background: linear-gradient(90deg, #fff, #f2fbff); border-radius: 50px; box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 35%, transparent); padding-right: 34px; }
+.t4-tag { width: 230px; height: 100%; border-radius: 50px; color: #fff; font: italic 800 44px 'Montserrat'; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.t4-text { flex: 1; margin-left: 28px; font: 700 36px 'Noto Sans KR Variable'; color: var(--text); }
+.t4-time { font: 800 34px 'Montserrat'; color: var(--accent); }
+.t4-frame { position: absolute; inset: -24px; border: 24px solid #fff; border-radius: 56px; box-shadow: 0 0 0 6px var(--accent), 0 14px 30px rgba(0,0,0,.15); pointer-events: none; }
+.t4-badges { position: absolute; left: 1240px; top: 830px; width: 600px; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+.t4-pill { background: #fff; color: var(--accent); border: 6px solid var(--accent); border-radius: 50px; padding: 4px 36px; font: 800 36px 'Montserrat'; }
+.t4-pill.alt { background: var(--accent); color: #fff; border-color: #fff; }
+
+/* ───── 템플릿 5 · 라벤더 폴라로이드 ───── */
+.t5 { background: linear-gradient(160deg, #fbf6ff, var(--bg) 60%, color-mix(in srgb, var(--accent) 45%, #fff)); }
+.t5::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent 0 58px, rgba(255,255,255,.45) 58px 60px), repeating-linear-gradient(-45deg, transparent 0 58px, rgba(255,255,255,.45) 58px 60px); }
+.t5-sheet { position: absolute; left: 1130px; top: 140px; width: 560px; height: 650px; background: #fff; transform: rotate(5deg); box-shadow: 0 10px 30px rgba(120,90,200,.25); }
+.t5-card { position: absolute; left: 1050px; top: 195px; width: 560px; height: 650px; background: #fff; border-radius: 10px; transform: rotate(-10deg); box-shadow: 0 14px 34px rgba(100,70,180,.3); }
+.t5-title { position: absolute; left: 60px; top: 36px; width: 800px; text-align: center; font: 900 124px/1.1 'Montserrat'; letter-spacing: 2px; background: linear-gradient(180deg, #b9a6ff, #7fd8ff 55%, #ffb4e1); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(3px 0 0 var(--text)) drop-shadow(-3px 0 0 var(--text)) drop-shadow(0 3px 0 var(--text)) drop-shadow(0 -3px 0 var(--text)) drop-shadow(0 8px 0 var(--text)); }
+.t5-rows { position: absolute; left: 60px; top: 200px; width: 800px; display: flex; flex-direction: column; gap: 16px; }
+.t5-row { height: 100px; display: flex; align-items: center; background: #fff; border-radius: 50px; box-shadow: 0 8px 18px rgba(130,100,200,.22); padding: 0 30px 0 20px; gap: 18px; }
+.t5-day { width: 68px; height: 68px; flex-shrink: 0; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #8fd8ff); color: #fff; font: 800 34px 'Noto Sans KR Variable'; display: flex; align-items: center; justify-content: center; }
+.t5-bar { width: 6px; height: 50px; border-radius: 3px; background: linear-gradient(var(--accent), #8fd8ff); }
+.t5-text { flex: 1; font: 700 34px 'Noto Sans KR Variable'; color: var(--text); }
+.t5-time { font: 800 32px 'Montserrat'; color: var(--accent); }
+.t5-info { position: absolute; left: 1020px; top: 900px; width: 620px; display: flex; justify-content: center; align-items: center; gap: 18px; font-weight: 700; font-size: 32px; color: var(--text); }
+.t5-info .b { background: var(--accent); color: #fff; padding: 2px 24px; border-radius: 30px; }
+
+/* ───── 템플릿 6 · 하트 프레임 ───── */
+.t6 { background-color: var(--bg); background-image: linear-gradient(color-mix(in srgb, var(--accent) 18%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--accent) 18%, transparent) 2px, transparent 2px); background-size: 44px 44px; }
+.t6-title { position: absolute; left: 60px; top: 30px; font: 900 100px/1.2 'Montserrat'; color: #fff; -webkit-text-stroke: 16px var(--accent); paint-order: stroke fill; filter: drop-shadow(0 8px 0 color-mix(in srgb, var(--accent) 60%, #000)); }
+.t6-card { position: absolute; left: 50px; top: 170px; width: 900px; height: 870px; background: var(--panel); border: 8px solid #fff; border-radius: 56px; box-shadow: 14px 14px 0 var(--accent); padding: 30px 34px; display: flex; flex-direction: column; gap: 14px; }
+.t6-row { flex: 1; display: flex; align-items: center; gap: 22px; background: #fff; border-radius: 50px; padding: 0 30px 0 12px; box-shadow: 0 5px 14px rgba(120,90,200,.15); }
+.t6-day { width: 150px; height: 70%; border-radius: 40px; color: #fff; font: 800 32px 'Montserrat'; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.t6-line { flex: 1; min-width: 0; border-bottom: 3px dashed color-mix(in srgb, var(--accent) 55%, transparent); height: 52px; display: flex; align-items: flex-end; padding-bottom: 2px; }
+.t6-line span { font: 700 32px 'Noto Sans KR Variable'; color: var(--text); }
+.t6-time { font: 800 32px 'Montserrat'; color: var(--accent); }
+.t6-heart { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; filter: drop-shadow(0 10px 20px rgba(100,70,200,.3)); }
+.t6-info { position: absolute; left: 1020px; top: 890px; width: 760px; display: flex; gap: 20px; justify-content: center; }
+.t6-pill { background: #fff; color: var(--accent); border: 6px solid var(--accent); border-radius: 50px; padding: 4px 36px; font: 800 34px 'Montserrat'; }
+.t6-pill.alt { background: var(--accent); color: #fff; border-color: #fff; }
+
+/* ───── 템플릿 7 · 노트 다이어리 ───── */
+.t7 { background: var(--bg); }
+.t7-edge { position: absolute; inset: 0; border: 22px solid var(--accent); box-shadow: inset 0 0 0 8px #fff; }
+.t7-frame { position: absolute; inset: -18px; border: 14px solid var(--accent); border-radius: 42px; box-shadow: inset 0 0 0 6px #fff; pointer-events: none; }
+.t7-tape { position: absolute; width: 150px; height: 50px; background: repeating-conic-gradient(color-mix(in srgb, var(--accent) 70%, #fff) 0 25%, rgba(255,255,255,.8) 0 50%) 0 0 / 25px 25px; opacity: .92; pointer-events: none; }
+.t7-note { position: absolute; left: 70px; top: 760px; width: 620px; height: 240px; background: #fff; border-radius: 34px; box-shadow: 0 8px 20px rgba(120,90,200,.18); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-family: 'Jua'; }
+.t7-sns { font-size: 54px; color: var(--accent); }
+.t7-date { font-size: 44px; color: var(--text); }
+.t7-panel { position: absolute; left: 760px; top: 90px; width: 1080px; height: 900px; background: #fff; border-radius: 64px; border: 4px solid color-mix(in srgb, var(--accent) 40%, #fff); box-shadow: 0 10px 30px rgba(120,90,200,.18); }
+.t7-title { position: absolute; left: 50%; top: -52px; transform: translateX(-50%); font: 400 84px/1.2 'Jua'; color: #fff; -webkit-text-stroke: 14px var(--accent); paint-order: stroke fill; white-space: nowrap; }
+.t7-rows { position: absolute; left: 80px; right: 80px; top: 110px; bottom: 50px; display: flex; flex-direction: column; border-top: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+.t7-row { flex: 1; display: flex; align-items: center; border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+.t7-tag { width: 140px; text-align: center; margin: 0 26px 0 6px; padding: 6px 0; border-radius: 10px; font: 800 30px 'Montserrat'; color: var(--text); flex-shrink: 0; }
+.t7-text { flex: 1; min-width: 0; height: 100%; border-left: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); padding-left: 28px; display: flex; align-items: center; font: 400 40px 'Jua'; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t7-time { width: 210px; height: 100%; border-left: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); display: flex; align-items: center; justify-content: center; font: 400 38px 'Jua'; }
+
+/* ───── 템플릿 8 · 우드 클립보드 ───── */
+.t8 { background: repeating-linear-gradient(90deg, rgba(0,0,0,.035) 0 6px, transparent 6px 14px), linear-gradient(180deg, color-mix(in srgb, var(--bg) 80%, #fff), var(--bg)); }
+.t8-title { position: absolute; left: 50px; top: 34px; width: 620px; font: 900 84px/1.02 'Montserrat'; color: #fff; -webkit-text-stroke: 12px var(--accent); paint-order: stroke fill; }
+.t8-badge { position: absolute; left: 60px; top: 205px; background: #fff; color: var(--text); border: 5px solid var(--accent); border-radius: 30px; padding: 2px 26px; font: 700 28px 'Noto Sans KR Variable'; }
+.t8-board { position: absolute; left: 50px; top: 290px; width: 580px; height: 740px; background: var(--accent); border-radius: 26px; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+.t8-clip { position: absolute; left: 50%; top: -52px; width: 150px; height: 70px; transform: translateX(-50%); background: #c9ccd3; border-radius: 12px; border: 6px solid #8d929c; pointer-events: none; z-index: 5; }
+.t8-clip i { display: block; width: 36px; height: 36px; border-radius: 50%; background: #8d929c; margin: 8px auto; }
+.t8-sns { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); background: #fff; color: var(--text); border-radius: 14px; padding: 2px 26px; font: 700 28px 'Noto Sans KR Variable'; box-shadow: 0 4px 10px rgba(0,0,0,.2); white-space: nowrap; pointer-events: none; }
+.t8-rows { position: absolute; left: 700px; top: 50px; width: 1180px; bottom: 50px; display: flex; flex-direction: column; gap: 12px; }
+.t8-row { flex: 1; display: flex; width: 1130px; }
+.t8-date { width: 120px; border-radius: 16px 0 0 16px; background: var(--accent); color: #fff; font: 900 58px 'Montserrat'; display: flex; align-items: center; justify-content: center; text-shadow: 0 3px 0 rgba(0,0,0,.2); }
+.t8-bar { position: relative; flex: 1; background: #fff; border-radius: 0 18px 18px 0; display: flex; align-items: center; padding: 0 28px; gap: 22px; box-shadow: 0 5px 0 rgba(0,0,0,.12); }
+.t8-row.off .t8-bar { background: #e6e1dc; }
+.t8-row.off .t8-date { background: #a89a8e !important; }
+.t8-meta { display: flex; flex-direction: column; align-items: center; min-width: 110px; gap: 2px; }
+.t8-meta small { color: #fff; font: 800 18px 'Montserrat'; padding: 0 14px; border-radius: 10px; }
+.t8-meta b { font: 400 36px 'Jua'; color: var(--text); }
+.t8-sep { width: 3px; height: 66px; background: rgba(0,0,0,.12); }
+.t8-text { flex: 1; font: 400 46px 'Jua'; color: var(--text); }
+.t8-row.off .t8-text { color: #8b7f76; }
+.t8-off { position: absolute; left: 50%; font: 900 54px 'Montserrat'; color: rgba(0,0,0,.09); letter-spacing: 4px; }
+
+/* ───── 템플릿 9 · 나이트 카드 ───── */
+.t9 { background-color: var(--bg); background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.045) 0 40px, transparent 40px 80px); }
+.t9-stripe { position: absolute; left: 0; right: 0; height: 20px; background: var(--accent); }
+.t9-stripe.top { top: 0; box-shadow: 0 8px 0 #ffd9a8; }
+.t9-stripe.bot { bottom: 0; box-shadow: 0 -8px 0 #ffd9a8; }
+.t9-title { position: absolute; left: 60px; top: 40px; width: 600px; font: 900 76px/0.98 'Montserrat'; color: #fff; -webkit-text-stroke: 12px #1d1636; paint-order: stroke fill; }
+.t9-badge { position: absolute; left: 70px; top: 192px; background: var(--accent); color: #fff; padding: 2px 26px; border-radius: 8px; font: 800 28px 'Montserrat'; }
+.t9-photoframe { position: absolute; left: 50px; top: 235px; width: 560px; height: 630px; background: #fff; transform: rotate(-3deg); box-shadow: 0 10px 24px rgba(0,0,0,.4); }
+.t9-sticky { position: absolute; left: 330px; top: 880px; background: #ffe08a; color: #5a4a1a; padding: 14px 30px; transform: rotate(-2deg); font: 700 30px 'Noto Sans KR Variable'; box-shadow: 0 6px 12px rgba(0,0,0,.35); }
+.t9-card { position: absolute; width: 370px; height: 290px; background: var(--panel); border: 6px solid var(--accent); border-radius: 14px; box-shadow: 0 8px 20px rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; }
+.t9-card.off { background: var(--sat); border-color: color-mix(in srgb, var(--sat) 60%, #fff); }
+.t9-ribbon { position: absolute; left: 20px; top: -6px; width: 66px; height: 94px; background: var(--accent); color: #fff; font: 900 38px 'Montserrat'; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%); display: flex; align-items: flex-start; justify-content: center; padding-top: 24px; box-sizing: border-box; }
+.t9-card.off .t9-ribbon { background: #8d86a8; }
+.t9-day { position: absolute; right: 20px; top: 14px; font: 800 24px 'Montserrat'; color: color-mix(in srgb, var(--accent) 65%, #fff); }
+.t9-card.off .t9-day { color: #6e6890; }
+.t9-text { font: 400 40px/1.2 'Jua'; color: var(--text); text-align: center; padding: 0 26px; margin-top: 44px; margin-bottom: 40px; max-height: 100px; overflow: hidden; }
+.t9-card.off .t9-text { color: #7d7699; }
+.t9-pill { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); background: #fff; border: 3px solid var(--accent); border-radius: 30px; padding: 2px 38px; font: 800 28px 'Montserrat'; color: var(--accent); white-space: nowrap; }
+.t9-card.off .t9-pill { color: #6e6890; border-color: #8d86a8; }
+
+/* ───── 템플릿 10 · 스탬프 티켓 ───── */
+.t10 { background: var(--bg); }
+.t10-map { position: absolute; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 28px, rgba(120,140,170,.2) 28px 30px); }
+.t10-map.m1 { left: -200px; top: 560px; width: 900px; height: 800px; }
+.t10-map.m2 { left: 1300px; top: -300px; width: 900px; height: 800px; }
+.t10-weekly { position: absolute; left: 50%; top: 0; transform: translateX(-50%); background: var(--text); color: #fff; padding: 12px 44px 16px; border-radius: 0 0 14px 14px; font: 800 28px/1.2 'Montserrat'; white-space: nowrap; }
+.t10-title { position: absolute; left: 70px; top: 60px; max-width: 580px; background: var(--text); color: #fff; padding: 6px 28px; border-radius: 8px; font: 900 92px/1.05 'Montserrat'; box-shadow: 8px 8px 0 var(--accent); }
+.t10-stamp { position: absolute; left: 36px; top: 216px; width: 628px; height: 668px; background: #fff; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,.2); outline: 10px dotted var(--bg); outline-offset: -26px; }
+.t10-art { position: absolute; left: 70px; top: 910px; background: #fff; border: 3px solid var(--text); border-radius: 8px; padding: 4px 22px; font: 700 26px 'Noto Sans KR Variable'; color: var(--text); }
+.t10-rows { position: absolute; left: 720px; top: 100px; width: 1130px; height: 880px; display: flex; flex-direction: column; gap: 16px; }
+.t10-row { flex: 1; display: flex; align-items: center; }
+.t10-ic { width: 104px; height: 100%; background: #fff; border: 5px solid var(--text); border-radius: 10px 0 0 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; gap: 4px; flex-shrink: 0; }
+.t10-ic b { font: 900 42px 'Montserrat'; color: var(--text); }
+.t10-ic small { font: 800 16px 'Montserrat'; color: var(--text); opacity: .7; }
+.t10-bar { flex: 1; height: 100%; display: flex; align-items: center; padding: 0 36px; color: #fff; font: 700 40px 'Noto Sans KR Variable'; box-shadow: inset 0 0 0 4px rgba(255,255,255,.4); text-shadow: 0 2px 0 rgba(0,0,0,.15); }
+.t10-ticket { width: 210px; height: 86%; margin-left: -4px; padding-right: 18px; color: #fff; font: 900 32px/1 'Montserrat'; display: flex; align-items: center; justify-content: center; text-align: center; clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%); border-radius: 12px 0 0 12px; }

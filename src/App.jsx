@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { toPng, toJpeg } from 'html-to-image';
-import { DAYS, DAYS_KO, defaultState, loadState, saveState } from './state.js';
+import { DAYS, DAYS_KO, TEMPLATES, SLOTS, defaultState, loadState, saveState, mergeState } from './state.js';
 import { Template1, Template2 } from './templates.jsx';
+import { SLOT_COMPONENTS } from './templates2.jsx';
+import { SLOT_COMPONENTS_3 } from './templates3.jsx';
+
+const ALL_SLOT = { ...SLOT_COMPONENTS, ...SLOT_COMPONENTS_3 };
 
 const COLOR_LABELS = { bg: '배경색', panel: '패널색', accent: '포인트색', text: '글자색', sat: '토요일 글자색', sun: '일요일 글자색' };
 
@@ -27,8 +31,10 @@ export default function App() {
   const fileRef = useRef(null);
 
   const tpl = state.template;
-  const key = tpl === 1 ? 't1' : 't2';
+  const key = 't' + tpl;
+  const meta = TEMPLATES.find((t) => t.id === tpl);
   const size = tpl === 1 ? { w: 1080, h: 1080 } : { w: 1920, h: 1080 };
+  const colorLabel = (k) => (meta.labels && meta.labels[k]) || COLOR_LABELS[k];
   const data = state[key];
 
   useEffect(() => { const t = setTimeout(() => saveState(state), 400); return () => clearTimeout(t); }, [state]);
@@ -49,7 +55,7 @@ export default function App() {
   const upd = (patch) => setState((s) => ({ ...s, [key]: { ...s[key], ...patch } }));
   const setRow = (i, patch) => upd({ rows: data.rows.map((r, j) => (j === i ? { ...r, ...patch } : r)) });
   const setColor = (k, v) => upd({ colors: { ...data.colors, [k]: v } });
-  const setPhoto = (photo) => setState((s) => ({ ...s, t2: { ...s.t2, photo } }));
+  const setPhoto = (photo) => setState((s) => ({ ...s, [key]: { ...s[key], photo } }));
 
   const addPhoto = (file) => {
     if (!file) return;
@@ -57,7 +63,7 @@ export default function App() {
     fr.onload = () => {
       const img = new Image();
       img.onload = () => {
-        const area = { w: 1100, h: 1080 };
+        const area = SLOTS[tpl];
         const k = Math.max(area.w / img.naturalWidth, area.h / img.naturalHeight);
         const w = img.naturalWidth * k;
         const h = img.naturalHeight * k;
@@ -82,7 +88,7 @@ export default function App() {
       const node = canvasRef.current;
       await toPng(node, opts); // 폰트/이미지 선로딩용 워밍업
       const dataUrl = format === 'png' ? await toPng(node, opts) : await toJpeg(node, opts);
-      const p = await window.api.saveImage(dataUrl, tpl === 1 ? 'schedule-1' : 'schedule-2');
+      const p = await window.api.saveImage(dataUrl, 'schedule-' + tpl);
       if (p) showToast('저장 완료: ' + p);
     } catch (e) {
       showToast('내보내기 실패: ' + e.message);
@@ -99,7 +105,7 @@ export default function App() {
     try {
       const s = JSON.parse(t);
       const d = defaultState();
-      setState({ ...d, ...s, t1: { ...d.t1, ...s.t1 }, t2: { ...d.t2, ...s.t2 } });
+      setState(mergeState(d, s));
       showToast('불러오기 완료');
     } catch {
       showToast('올바른 파일이 아닙니다');
@@ -112,8 +118,9 @@ export default function App() {
   return (
     <div className="app">
       <div className="topbar">
-        <button className={'btn' + (tpl === 1 ? ' on' : '')} onClick={() => setState((s) => ({ ...s, template: 1 }))}>템플릿 1 · 고정형</button>
-        <button className={'btn' + (tpl === 2 ? ' on' : '')} onClick={() => setState((s) => ({ ...s, template: 2 }))}>템플릿 2 · 사진 배경형</button>
+        <select className="btn tplsel" value={tpl} onChange={(e) => { setSelected(false); setState((st) => ({ ...st, template: Number(e.target.value) })); }}>
+          {TEMPLATES.map((t) => <option key={t.id} value={t.id}>{t.id}. {t.name} ({t.sub})</option>)}
+        </select>
         <div className="spacer" />
         <button className="btn" onClick={loadProj}>불러오기</button>
         <button className="btn" onClick={saveProj}>프로젝트 저장</button>
@@ -135,18 +142,19 @@ export default function App() {
             <Field label="기간" value={state.t1.period} onChange={(v) => upd({ period: v })} />
           ) : (
             <>
-              <Field label="SNS 아이디" value={state.t2.sns} onChange={(v) => upd({ sns: v })} />
-              <Field label="날짜 뱃지" value={state.t2.badge} onChange={(v) => upd({ badge: v })} />
+              {tpl >= 3 && <Field label="제목" value={data.title} onChange={(v) => upd({ title: v })} />}
+              <Field label="SNS 아이디" value={data.sns} onChange={(v) => upd({ sns: v })} />
+              <Field label="날짜 뱃지" value={data.badge} onChange={(v) => upd({ badge: v })} />
             </>
           )}
 
-          {tpl === 2 && (
+          {tpl >= 2 && (
             <>
-              <h3>배경 사진</h3>
+              <h3>{tpl === 2 ? '배경 사진' : '사진'}</h3>
               <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => { addPhoto(e.target.files[0]); e.target.value = ''; }} />
               <div style={{ display: 'flex', gap: 6 }}>
-                <button className="btn" onClick={() => fileRef.current.click()}>{state.t2.photo ? '사진 교체' : '사진 추가'}</button>
-                {state.t2.photo && <button className="btn danger" onClick={() => { setPhoto(null); setSelected(false); }}>사진 삭제</button>}
+                <button className="btn" onClick={() => fileRef.current.click()}>{data.photo ? '사진 교체' : '사진 추가'}</button>
+                {data.photo && <button className="btn danger" onClick={() => { setPhoto(null); setSelected(false); }}>사진 삭제</button>}
               </div>
               <div className="hint">미리보기에서 사진을 드래그해 이동, 모서리 점을 끌어 크기를 조절하세요. 바깥을 클릭하면 선택이 해제됩니다.</div>
             </>
@@ -164,6 +172,8 @@ export default function App() {
                 </div>
               ) : (
                 <div className="grid">
+                  {meta.dates && <input className="in" placeholder="날짜 (예: 04)" value={r.date || ''} onChange={(e) => setRow(i, { date: e.target.value })} />}
+                  {meta.dates && <span />}
                   <input className="in" placeholder="내용" value={r.text} onChange={(e) => setRow(i, { text: e.target.value })} />
                   <input className="in" placeholder="시간" value={r.time} onChange={(e) => setRow(i, { time: e.target.value })} />
                 </div>
@@ -174,7 +184,7 @@ export default function App() {
           <h3>색상</h3>
           <div className="colors">
             {Object.keys(COLOR_LABELS).map((k) => (
-              <label key={k}>{COLOR_LABELS[k]}<input type="color" value={data.colors[k]} onChange={(e) => setColor(k, e.target.value)} /></label>
+              <label key={k}>{colorLabel(k)}<input type="color" value={data.colors[k]} onChange={(e) => setColor(k, e.target.value)} /></label>
             ))}
           </div>
           <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -187,9 +197,13 @@ export default function App() {
           <div className="stage" style={{ width: size.w * scale, height: size.h * scale, boxShadow: '0 10px 40px #0008' }}>
             <div className="scaler" style={{ transform: `scale(${scale})` }}>
               <div ref={canvasRef} style={{ width: size.w, height: size.h }}>
-                {tpl === 1
-                  ? <Template1 data={state.t1} />
-                  : <Template2 data={state.t2} scale={scale} onPhoto={setPhoto} selected={selected} setSelected={setSelected} />}
+                {(() => {
+                  if (tpl === 1) return <Template1 data={state.t1} />;
+                  const common = { scale, onPhoto: setPhoto, selected, setSelected };
+                  if (tpl === 2) return <Template2 data={state.t2} {...common} />;
+                  const C = ALL_SLOT[tpl];
+                  return <C data={state[key]} {...common} />;
+                })()}
               </div>
             </div>
           </div>

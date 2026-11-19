@@ -66,3 +66,4 @@ select.btn { padding: 8px 10px; }
 .t2-day { width: 96px; font: 900 34px 'Montserrat', sans-serif; }
 .t2-text { flex: 1; font-weight: 700; font-size: 29px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .t2-time { font: 800 32px 'Montserrat', sans-serif; white-space: nowrap; }
+.tplsel { max-width: 380px; }
