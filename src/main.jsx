@@ -6,6 +6,7 @@ import '@fontsource/montserrat/900.css';
 import '@fontsource/jua';
 import './styles.css';
 import './styles2.css';
+import './styles4.css';
 import './ui.css';
 import App from './App.jsx';
 createRoot(document.getElementById('root')).render(<App />);

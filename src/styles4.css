@@ -1,0 +1,67 @@
+/* ───── 템플릿 11 · 블루 심플 카드 ───── */
+.t11 { background: radial-gradient(ellipse at 30% 10%, #fff, var(--bg) 75%); }
+.t11-card { position: absolute; left: 36px; top: 36px; right: 36px; bottom: 36px; background: var(--panel); border: 16px solid color-mix(in srgb, var(--accent) 35%, #fff); border-radius: 64px; box-shadow: 0 0 0 6px #fff, 0 20px 44px rgba(30,100,170,.28); display: flex; flex-direction: column; padding: 18px 50px 40px; }
+.t11-title { display: flex; align-items: center; justify-content: center; gap: 22px; height: 120px; border-bottom: 4px dashed color-mix(in srgb, var(--accent) 40%, #fff); }
+.t11-h { position: relative; width: 78px; height: 78px; flex-shrink: 0; }
+.t11-t { font: 800 66px/1.2 'Noto Sans KR Variable', sans-serif; color: var(--accent); -webkit-text-stroke: 14px #fff; paint-order: stroke fill; filter: drop-shadow(0 4px 0 color-mix(in srgb, var(--accent) 40%, #fff)); white-space: nowrap; }
+.t11-rows { flex: 1; display: flex; flex-direction: column; }
+.t11-row { flex: 1; display: flex; align-items: center; border-bottom: 3px dashed color-mix(in srgb, var(--accent) 35%, #fff); }
+.t11-row:last-child { border-bottom: none; }
+.t11-day { width: 250px; font: 700 40px 'Noto Sans KR Variable', sans-serif; padding-left: 8px; }
+.t11-val { flex: 1; text-align: center; font: 800 56px 'Noto Sans KR Variable', sans-serif; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t11-foot { text-align: center; font: 700 28px 'Noto Sans KR Variable', sans-serif; color: color-mix(in srgb, var(--accent) 70%, #fff); margin-top: 6px; }
+.t11-foot i { font-style: normal; margin-left: 14px; }
+
+/* ───── 템플릿 12 · 사이버 HUD ───── */
+.t12 { background: radial-gradient(ellipse at 70% 30%, color-mix(in srgb, var(--accent) 22%, var(--bg)), var(--bg) 70%); font-family: 'Montserrat', 'Noto Sans KR Variable', sans-serif; color: #fff; }
+.t12-grid { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 58px, color-mix(in srgb, var(--accent) 10%, transparent) 58px 60px), repeating-linear-gradient(90deg, transparent 0 58px, color-mix(in srgb, var(--accent) 10%, transparent) 58px 60px); }
+.t12-map { position: absolute; left: 0; top: 0; pointer-events: none; }
+.t12-vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0,0,0,.55)); pointer-events: none; }
+.t12-top { position: absolute; left: 60px; top: 26px; transform: skewX(-12deg); line-height: 1; }
+.t12-top span { display: block; font: 900 64px 'Montserrat'; font-style: italic; color: var(--accent); text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 70%, transparent); letter-spacing: 3px; }
+.t12-top i { display: block; font: 900 130px/1 'Montserrat'; font-style: italic; color: #fff; -webkit-text-stroke: 4px var(--accent); letter-spacing: 2px; text-shadow: 0 0 30px color-mix(in srgb, var(--accent) 60%, transparent); }
+.t12-rows { position: absolute; left: 60px; top: 262px; width: 1130px; display: flex; flex-direction: column; gap: 14px; }
+.t12-row { position: relative; height: 90px; display: flex; align-items: stretch; transform: skewX(-18deg); }
+.t12-day { width: 150px; background: color-mix(in srgb, var(--accent) 30%, var(--bg)); border: 3px solid var(--accent); border-right: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent), inset 0 0 14px color-mix(in srgb, var(--accent) 35%, transparent); }
+.t12-day b { transform: skewX(18deg); font: 900 34px 'Montserrat'; font-style: italic; letter-spacing: 2px; }
+.t12-bar { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; background: linear-gradient(90deg, color-mix(in srgb, var(--panel) 85%, #fff), var(--panel)); border: 3px solid var(--accent); box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 40%, transparent), inset 0 0 20px rgba(0,0,0,.25); }
+.t12-text { transform: skewX(18deg); font: 800 40px 'Noto Sans KR Variable'; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 0 10px rgba(0,0,0,.5); }
+.t12-pad { width: 66px; height: 54px; color: var(--accent); transform: skewX(18deg); flex-shrink: 0; filter: drop-shadow(0 0 8px var(--accent)); }
+.t12-tag { width: 190px; background: var(--accent); color: #04101f; border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; font: 900 30px 'Montserrat'; font-style: italic; letter-spacing: 1px; box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 60%, transparent); }
+.t12-tag::before { content: ''; }
+.t12-row.off .t12-bar { background: linear-gradient(90deg, rgba(180,200,225,.22), rgba(180,200,225,.08)); border-color: color-mix(in srgb, var(--accent) 55%, transparent); box-shadow: none; }
+.t12-row.off .t12-text { color: rgba(220,235,255,.75); font-style: italic; font-weight: 700; }
+.t12-row.off .t12-day { border-color: color-mix(in srgb, var(--accent) 55%, transparent); box-shadow: none; }
+.t12-row.off .t12-tag { background: color-mix(in srgb, var(--sun) 70%, #04101f); border-color: var(--sun); color: #fff; box-shadow: none; }
+.t12-row > * { transform-origin: center; }
+.t12-row .t12-tag > * , .t12-tag { }
+.t12-tag { transform: none; }
+.t12-date { position: absolute; right: 70px; top: 30px; background: rgba(0,0,0,.35); border: 3px solid var(--accent); padding: 8px 34px; transform: skewX(-18deg); font: 900 40px 'Montserrat'; font-style: italic; letter-spacing: 2px; box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 50%, transparent); }
+.t12-date small { font-size: 16px; display: block; color: var(--accent); letter-spacing: 6px; }
+.t12-cap { position: absolute; left: 1240px; top: 68px; font: 900 40px 'Montserrat'; font-style: italic; color: #fff; text-shadow: 0 0 14px var(--accent); letter-spacing: 3px; }
+.t12-frame { position: absolute; left: 1236px; top: 126px; width: 628px; height: 688px; border: 3px solid color-mix(in srgb, var(--accent) 70%, transparent); background: rgba(255,255,255,.04); box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 35%, transparent); pointer-events: none; }
+.t12-frame i { position: absolute; width: 34px; height: 34px; border: 6px solid var(--accent); }
+.t12-frame .a { left: -6px; top: -6px; border-right: none; border-bottom: none; } .t12-frame .b { right: -6px; top: -6px; border-left: none; border-bottom: none; }
+.t12-frame .c { left: -6px; bottom: -6px; border-right: none; border-top: none; } .t12-frame .d { right: -6px; bottom: -6px; border-left: none; border-top: none; }
+.t12-frame { z-index: 0; }
+.t12-info { position: absolute; left: 1236px; top: 836px; width: 628px; height: 150px; border: 3px solid color-mix(in srgb, var(--accent) 60%, transparent); background: rgba(0,0,0,.3); padding: 14px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+.t12-ids small { display: block; font: 800 15px 'Montserrat'; color: var(--accent); letter-spacing: 5px; }
+.t12-ids b { font: 800 40px 'Montserrat'; letter-spacing: 1px; }
+.t12-lines { display: flex; gap: 8px; } .t12-lines i { flex: 1; height: 8px; background: color-mix(in srgb, var(--accent) 55%, transparent); transform: skewX(-30deg); }
+.t12-foot { position: absolute; left: 60px; right: 60px; bottom: 18px; display: flex; justify-content: space-between; font: 800 18px 'Montserrat'; letter-spacing: 6px; color: color-mix(in srgb, var(--accent) 80%, #fff); border-top: 2px solid color-mix(in srgb, var(--accent) 40%, transparent); padding-top: 8px; }
+
+/* ───── 템플릿 13 · 내 배경 자유형 ───── */
+.t13 { background: linear-gradient(135deg, color-mix(in srgb, var(--bg) 60%, #fff), var(--bg) 55%, color-mix(in srgb, var(--accent) 45%, var(--bg))); }
+.t13 .slot-clip { background: transparent; }
+.t13 .slot-empty { font-size: 44px; color: var(--text); opacity: .5; }
+.t13-dim { position: absolute; inset: 0; pointer-events: none; }
+.t13-panel { position: absolute; border-radius: 44px; padding: 36px 40px; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,.35), inset 0 0 0 3px rgba(255,255,255,.45); pointer-events: none; }
+.t13-head { text-align: center; margin-bottom: 18px; }
+.t13-title { font: 900 78px/1.15 'Montserrat', 'Noto Sans KR Variable', sans-serif; color: var(--accent); -webkit-text-stroke: 12px var(--panel); paint-order: stroke fill; letter-spacing: 3px; }
+.t13-sub { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 6px; font: 700 28px 'Noto Sans KR Variable', sans-serif; color: var(--text); }
+.t13-sub b { background: var(--accent); color: #fff; padding: 2px 24px; border-radius: 30px; font: 800 26px 'Montserrat'; }
+.t13-rows { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.t13-row { flex: 1; display: flex; align-items: center; gap: 18px; padding: 0 18px; border-radius: 26px; background: rgba(255,255,255,.6); box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 30%, transparent); }
+.t13-day { width: 110px; height: 56px; border-radius: 28px; color: #fff; font: 800 28px 'Montserrat'; display: flex; align-items: center; justify-content: center; text-shadow: 0 2px 0 rgba(0,0,0,.2); flex-shrink: 0; }
+.t13-text { flex: 1; min-width: 0; font: 800 34px 'Noto Sans KR Variable', sans-serif; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.t13-time { font: 800 30px 'Montserrat'; color: var(--accent); white-space: nowrap; }

@@ -71,7 +71,7 @@ export default function App({ mock } = {}) {
   const data = state[key];
   const scale = fit * zoom;
   const colorLabel = (k) => (meta.labels && meta.labels[k]) || COLOR_LABELS[k];
-  const hasPhoto = tpl >= 2;
+  const hasPhoto = tpl >= 2 && !meta.noPhoto;
 
   /* ── 상태 + 되돌리기 ── */
   const setState = useCallback((updater) => {
@@ -333,6 +333,7 @@ export default function App({ mock } = {}) {
                       {tpl >= 3 && <label className="ui-f"><span>제목</span><input className="ui-in" value={data.title} onChange={(e) => upd({ title: e.target.value })} /></label>}
                       <label className="ui-f"><span>SNS 아이디</span><input className="ui-in" value={data.sns} onChange={(e) => upd({ sns: e.target.value })} /></label>
                       <label className="ui-f"><span>기간 표시</span><input className="ui-in" value={data.badge} onChange={(e) => upd({ badge: e.target.value })} /></label>
+                      {tpl === 12 && <label className="ui-f"><span>사진 위 문구</span><input className="ui-in" value={data.caption || ''} onChange={(e) => upd({ caption: e.target.value })} /></label>}
                     </>
                   )}
                 </section>
@@ -353,11 +354,13 @@ export default function App({ mock } = {}) {
                                 <input className="ui-in" placeholder="제목" value={r.title} onChange={(e) => setRow(i, { title: e.target.value })} aria-label={`${DAYS_KO[i]} 제목`} />
                                 <input className="ui-in sub" placeholder="설명" value={r.desc} onChange={(e) => setRow(i, { desc: e.target.value })} aria-label={`${DAYS_KO[i]} 설명`} />
                               </>
+                            ) : meta.single ? (
+                              <input className="ui-in" placeholder="예: AM 2:00" value={r.time} onChange={(e) => setRow(i, { time: e.target.value })} aria-label={`${DAYS_KO[i]} 표시 내용`} />
                             ) : (
                               <input className="ui-in" placeholder="방송 내용" value={r.text} onChange={(e) => setRow(i, { text: e.target.value })} aria-label={`${DAYS_KO[i]} 내용`} />
                             )}
                           </div>
-                          <input className="ui-in ui-time" value={r.time} onChange={(e) => setRow(i, { time: e.target.value })} aria-label={`${DAYS_KO[i]} 시간`} />
+                          {!meta.single && <input className="ui-in ui-time" value={r.time} onChange={(e) => setRow(i, { time: e.target.value })} aria-label={`${DAYS_KO[i]} 시간`} />}
                           <button className={'ui-off' + (off ? ' on' : '')} aria-pressed={off} onClick={() => toggleOff(i)} title="이 날은 방송 쉬어요">휴방</button>
                         </div>
                       );
@@ -385,6 +388,15 @@ export default function App({ mock } = {}) {
                     ))}
                   </div>
                 </section>
+                {meta.custom && (
+                  <section className="ui-box">
+                    <div className="ui-h">시간표 배치 <small>배경 위에 올라가는 표</small></div>
+                    <Segmented label="표 위치" value={(data.layout || {}).side || 'right'} onChange={(v) => upd({ layout: { ...data.layout, side: v } })} options={[{ value: 'left', label: '왼쪽' }, { value: 'center', label: '가운데' }, { value: 'right', label: '오른쪽' }]} />
+                    <label className="ui-f" style={{ marginTop: 12 }}><span>표 투명도 {(data.layout || {}).opacity}%</span><input type="range" min="0" max="100" value={(data.layout || {}).opacity} onChange={(e) => upd({ layout: { ...data.layout, opacity: Number(e.target.value) } })} /></label>
+                    <label className="ui-f"><span>표 크기 {(data.layout || {}).scale}%</span><input type="range" min="60" max="110" value={(data.layout || {}).scale} onChange={(e) => upd({ layout: { ...data.layout, scale: Number(e.target.value) } })} /></label>
+                    <label className="ui-f"><span>배경 어둡게 {(data.layout || {}).dim}%</span><input type="range" min="0" max="80" value={(data.layout || {}).dim} onChange={(e) => upd({ layout: { ...data.layout, dim: Number(e.target.value) } })} /></label>
+                  </section>
+                )}
                 <section className="ui-box">
                   <div className="ui-h">세부 색상</div>
                   <div className="ui-colors">
@@ -399,10 +411,10 @@ export default function App({ mock } = {}) {
 
             {tab === 'photo' && hasPhoto && (
               <section className="ui-box">
-                <div className="ui-h">사진</div>
+                <div className="ui-h">{meta.custom ? '배경 이미지' : '사진'}</div>
                 {!photo ? (
                   <button className="ui-drop-area" onClick={openFile}>
-                    <b>+ 사진 추가</b>
+                    <b>{meta.custom ? '+ 배경 이미지 추가' : '+ 사진 추가'}</b>
                     <span>클릭하거나 이미지를 끌어다 놓으세요</span>
                   </button>
                 ) : (
