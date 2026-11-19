@@ -14,7 +14,7 @@ export const photoTransform = (p) => {
 };
 
 /** 사진 슬롯: 모양대로 잘린 영역 안에서 사진 이동/크기 조절 */
-export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, onAddPhoto, clip, radius, children }) {
+export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, onAddPhoto, emptyText, clip, radius, children }) {
   const ang = ((slot.angle || 0) * Math.PI) / 180;
   const startDrag = (e, mode) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, 
   return (
     <div className="slot" style={{ left: slot.x, top: slot.y, width: slot.w, height: slot.h, transform: slot.angle ? `rotate(${slot.angle}deg)` : undefined }}>
       <div className="slot-clip" style={{ clipPath: clip, borderRadius: radius }} onPointerDown={(e) => startDrag(e, 'move')}>
-        {!photo && <div className="slot-empty noexport">+ 클릭해서 사진 추가</div>}
+        {!photo && <div className="slot-empty noexport">{emptyText || '+ 클릭해서 사진 추가'}</div>}
         {photo && <img src={photo.src} alt="" draggable={false} style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h, transform: photoTransform(photo) }} />}
       </div>
       {children}

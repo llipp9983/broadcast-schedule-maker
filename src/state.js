@@ -16,6 +16,8 @@ export const TEMPLATES = [
   { id: 11, name: '블루 심플 카드', sub: '작은 표 · 하트', single: true, noPhoto: true },
   { id: 12, name: '사이버 HUD', sub: '네온 · 게임 화면', labels: { sat: '(사용 안 함)', sun: '휴방 태그색' } },
   { id: 13, name: '내 배경 자유형', sub: '내 이미지 위에 시간표', custom: true },
+  { id: 14, name: '라벤더 모눈 노트', sub: '4:3 · 모눈종이 · 테이프', td: true, extra: true, dotFmt: true, labels: { sat: '토요일 칩 색', sun: '일요일 칩 색' }, captionLabel: '카드 위 문구' },
+  { id: 15, name: '모노 체커 폴라로이드', sub: '4:3 · 흑백 · 체커', td: true, extra: true, dotFmt: true, caption2: true, labels: { sat: '(사용 안 함)', sun: '(사용 안 함)' }, captionLabel: '왼쪽 위 라벨', accentOnly: true },
 ];
 
 // 사진 슬롯 크기 (템플릿 안에서 사진이 보이는 영역)
@@ -30,9 +32,15 @@ export const SLOTS = {
   9: { w: 520, h: 600 },
   10: { w: 560, h: 600 },
   12: { w: 580, h: 640 },
+  14: { w: 960, h: 900 },
+  15: { w: 780, h: 722 },
   13: { w: 1920, h: 1080 },
 };
 
+const SAMPLE_TD = () => [
+  ['저녁 소통 방송', '오늘도 같이 이야기해요', '20:00'], ['종합 게임 데이', '랜덤 게임 플레이', '21:00'], ['쉬어가는 하루', '휴방', 'OFF'], ['시청자 참여', '같이 즐기는 게임', '20:00'],
+  ['불금 게임 방송', '신작 게임 도전', '22:00'], ['주말 특별 방송', '이벤트 진행', '19:00'], ['잔잔한 마무리', '힐링 & 잡담', '20:00'],
+].map(([title, desc, time]) => ({ title, desc, time }));
 const slotRows = (offText = '휴방') => DAYS.map((_, i) => ({ date: String(4 + i).padStart(2, '0'), text: i === 6 ? offText : '방송 내용을 입력하세요', time: i === 6 ? 'OFF' : '20:00' }));
 const slotTpl = (title, colors, extra = {}) => ({ title, sns: '@my_streamer_id', badge: '11.10 ~ 11.16', rows: slotRows(), colors, photo: null, ...extra });
 
@@ -60,6 +68,14 @@ export const defaultState = () => ({
   t11: slotTpl('방송 스케줄표', { bg: '#cdeaff', panel: '#ffffff', accent: '#2f9bd8', text: '#2b3b4a', sat: '#2f7be5', sun: '#e5484d' }),
   t12: slotTpl('STREAMER', { bg: '#04101f', panel: '#0a2a4a', accent: '#2fd6ff', text: '#ffffff', sat: '#ffd23f', sun: '#ff5a6e' }, { caption: 'FAN ART', rows: slotRows().map((r, i) => ({ ...r, icon: ['game', 'chat', 'game', 'music', 'chat', 'game', 'none'][i] })) }),
   t13: slotTpl('WEEKLY SCHEDULE', { bg: '#8fd3f4', panel: '#ffffff', accent: '#3a7bd9', text: '#26324a', sat: '#2f7be5', sun: '#e5484d' }, { layout: { style: 'glass', mode: 'list', side: 'right', vpos: 'bottom', opacity: 78, scale: 100, dim: 20 } }),
+  t14: {
+    title: 'SCHEDULE', kicker: 'WEEKLY LIVE SCHEDULE', badge: '2026. 11. 09  -  11. 15', note: '※ 방송 일정은 변경될 수 있습니다.', caption: 'on air  ·  this week', hl: 0, sns: '', photo: null,
+    rows: SAMPLE_TD(), colors: { bg: '#c79be9', panel: '#fffefb', accent: '#b36fe0', text: '#7a4f8f', sat: '#d6ccff', sun: '#ffcfcf' },
+  },
+  t15: {
+    title: 'SCHEDULE', kicker: 'WEEKLY LIVE SCHEDULE', badge: '2026. 11. 09  -  11. 15', note: '※ 방송 일정은 변경될 수 있습니다.', caption: 'CUT & PASTE', caption2: 'VOL. 01 / LIVE', hl: 0, sns: '', photo: null,
+    rows: SAMPLE_TD(), colors: { bg: '#f3f2ee', panel: '#fffbf2', accent: '#222222', text: '#222222', sat: '#bbbbbb', sun: '#bbbbbb' },
+  },
   t7: slotTpl('주간 스케줄', { bg: '#fdf6f0', panel: '#ffffff', accent: '#b9a6f2', text: '#5a4690', sat: '#4f7bff', sun: '#ff5c7a' }),
 });
 

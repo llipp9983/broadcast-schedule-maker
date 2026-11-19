@@ -142,7 +142,8 @@ export default function App({ mock } = {}) {
     setState((s) => {
       const cur = s[key];
       const rows = cur.rows.map((r, i) => (r.date !== undefined ? { ...r, date: pad(addDays(start, i).getDate()) } : r));
-      return { ...s, [key]: { ...cur, rows, ...(tpl === 1 ? { period: `${dot(start)} ~ ${dot(end)}` } : { badge: `${md(start)} ~ ${md(end)}` }) } };
+      const dotRange = `${start.getFullYear()}. ${pad(start.getMonth() + 1)}. ${pad(start.getDate())}  -  ${pad(end.getMonth() + 1)}. ${pad(end.getDate())}`;
+      return { ...s, [key]: { ...cur, rows, ...(tpl === 1 ? { period: `${dot(start)} ~ ${dot(end)}` } : { badge: meta.dotFmt ? dotRange : `${md(start)} ~ ${md(end)}` }) } };
     });
     showToast('날짜를 적용했어요');
   };
@@ -339,6 +340,20 @@ export default function App({ mock } = {}) {
                       <label className="ui-f"><span>SNS 아이디</span><input className="ui-in" value={data.sns} onChange={(e) => upd({ sns: e.target.value })} /></label>
                       <label className="ui-f"><span>기간 표시</span><input className="ui-in" value={data.badge} onChange={(e) => upd({ badge: e.target.value })} /></label>
                       {tpl === 12 && <label className="ui-f"><span>사진 위 문구</span><input className="ui-in" value={data.caption || ''} onChange={(e) => upd({ caption: e.target.value })} /></label>}
+                      {meta.extra && (
+                        <>
+                          <label className="ui-f"><span>제목 위 작은 글자</span><input className="ui-in" value={data.kicker || ''} onChange={(e) => upd({ kicker: e.target.value })} /></label>
+                          <label className="ui-f"><span>{meta.captionLabel}</span><input className="ui-in" value={data.caption || ''} onChange={(e) => upd({ caption: e.target.value })} /></label>
+                          {meta.caption2 && <label className="ui-f"><span>오른쪽 아래 라벨</span><input className="ui-in" value={data.caption2 || ''} onChange={(e) => upd({ caption2: e.target.value })} /></label>}
+                          <label className="ui-f"><span>아래 안내 문구</span><input className="ui-in" value={data.note || ''} onChange={(e) => upd({ note: e.target.value })} /></label>
+                          <label className="ui-f"><span>강조 표시할 요일 (오늘)</span>
+                            <select className="ui-in" value={data.hl === undefined ? 0 : data.hl} onChange={(e) => upd({ hl: Number(e.target.value) })}>
+                              <option value={-1}>표시 안 함</option>
+                              {DAYS_KO.map((d, i) => <option key={d} value={i}>{d}요일</option>)}
+                            </select>
+                          </label>
+                        </>
+                      )}
                     </>
                   )}
                 </section>
@@ -354,7 +369,7 @@ export default function App({ mock } = {}) {
                           <span className="ui-chip" style={{ background: col }} title={DAYS[i]}>{DAYS_KO[i]}</span>
                           {r.date !== undefined && <input className="ui-in ui-date" value={r.date} onChange={(e) => setRow(i, { date: e.target.value })} aria-label={`${DAYS_KO[i]} 날짜`} />}
                           <div className="ui-day-main">
-                            {tpl === 1 ? (
+                            {(tpl === 1 || meta.td) ? (
                               <>
                                 <input className="ui-in" placeholder="제목" value={r.title} onChange={(e) => setRow(i, { title: e.target.value })} aria-label={`${DAYS_KO[i]} 제목`} />
                                 <input className="ui-in sub" placeholder="설명" value={r.desc} onChange={(e) => setRow(i, { desc: e.target.value })} aria-label={`${DAYS_KO[i]} 설명`} />

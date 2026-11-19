@@ -3,10 +3,11 @@ import { Template1, Template2 } from './templates.jsx';
 import { SLOT_COMPONENTS } from './templates2.jsx';
 import { SLOT_COMPONENTS_3 } from './templates3.jsx';
 import { SLOT_COMPONENTS_4 } from './templates4.jsx';
+import { SLOT_COMPONENTS_5 } from './templates5.jsx';
 import { defaultState } from './state.js';
 
-const SLOT = { ...SLOT_COMPONENTS, ...SLOT_COMPONENTS_3, ...SLOT_COMPONENTS_4 };
-export const sizeOf = (id) => (id === 1 ? { w: 1080, h: 1080 } : id === 11 ? { w: 1080, h: 1000 } : { w: 1920, h: 1080 });
+const SLOT = { ...SLOT_COMPONENTS, ...SLOT_COMPONENTS_3, ...SLOT_COMPONENTS_4, ...SLOT_COMPONENTS_5 };
+export const sizeOf = (id) => (id === 1 ? { w: 1080, h: 1080 } : id === 11 ? { w: 1080, h: 1000 } : id === 14 || id === 15 ? { w: 1606, h: 1200 } : { w: 1920, h: 1080 });
 
 export function renderTemplate(id, data, common) {
   if (id === 1) return <Template1 data={data} />;
