@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { Template1, Template2 } from './templates.jsx';
 import { SLOT_COMPONENTS } from './templates2.jsx';
 import { SLOT_COMPONENTS_3 } from './templates3.jsx';
@@ -24,11 +24,23 @@ const THUMB_H = 84;
 export const TemplateThumb = memo(function TemplateThumb({ id }) {
   const sz = sizeOf(id);
   const k = THUMB_H / sz.h;
+  const ref = useRef(null);
+  const [on, setOn] = useState(false);
+  // 화면에 보일 때만 그린다 (시작이 빨라짐)
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') { setOn(true); return undefined; }
+    const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) { setOn(true); io.disconnect(); } }, { rootMargin: '240px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   return (
-    <div className="ui-thumb-box" style={{ width: sz.w * k, height: THUMB_H }}>
-      <div style={{ width: sz.w, height: sz.h, transform: `scale(${k})`, transformOrigin: 'top left', pointerEvents: 'none' }}>
-        {renderTemplate(id, SAMPLE['t' + id], { scale: 1, onPhoto: noop, selected: false, setSelected: noop })}
-      </div>
+    <div ref={ref} className="ui-thumb-box" style={{ width: sz.w * k, height: THUMB_H }}>
+      {on && (
+        <div style={{ width: sz.w, height: sz.h, transform: `scale(${k})`, transformOrigin: 'top left', pointerEvents: 'none' }}>
+          {renderTemplate(id, SAMPLE['t' + id], { scale: 1, onPhoto: noop, selected: false, setSelected: noop })}
+        </div>
+      )}
     </div>
   );
 });

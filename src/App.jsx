@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { toPng, toJpeg } from 'html-to-image';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { toPng, toJpeg, getFontEmbedCSS } from 'html-to-image';
 import { DAYS, DAYS_KO, TEMPLATES, SLOTS, defaultState, loadState, saveState, mergeState } from './state.js';
 import { renderTemplate, sizeOf, TemplateThumb } from './registry.jsx';
 import { LAYOUT13 } from './templates4.jsx';
@@ -62,6 +62,9 @@ export default function App({ mock } = {}) {
   const past = useRef([]);
   const future = useRef([]);
   const lastPush = useRef(0);
+  const fontCss = useRef({});
+  const rafRef = useRef(0);
+  const pendingPhoto = useRef(null);
   const [, force] = useState(0);
   stateRef.current = state;
 
@@ -153,20 +156,26 @@ export default function App({ mock } = {}) {
   /* ── 사진 ── */
   const addPhoto = useCallback((file) => {
     if (!file || !file.type.startsWith('image/')) return;
-    const fr = new FileReader();
-    fr.onload = () => {
-      const img = new Image();
-      img.onload = () => {
-        const area = SLOTS[stateRef.current.template];
-        if (!area) return;
-        const k = Math.max(area.w / img.naturalWidth, area.h / img.naturalHeight);
-        const w = img.naturalWidth * k, h = img.naturalHeight * k;
-        setState((s) => ({ ...s, ['t' + s.template]: { ...s['t' + s.template], photo: { src: fr.result, x: (area.w - w) / 2, y: (area.h - h) / 2, w, h, bw: w } } }));
-        setSelected(true); setTab('photo');
-      };
-      img.src = fr.result;
+    const objUrl = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      // 큰 사진은 긴 변 2600px 이하로 줄여서 쓴다 (메모리·저장 속도·자동저장 용량 절약)
+      const MAX = 2600;
+      const k0 = Math.min(1, MAX / Math.max(img.naturalWidth, img.naturalHeight));
+      const cw = Math.round(img.naturalWidth * k0), ch = Math.round(img.naturalHeight * k0);
+      const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+      c.getContext('2d').drawImage(img, 0, 0, cw, ch);
+      const src = file.type === 'image/jpeg' ? c.toDataURL('image/jpeg', 0.9) : c.toDataURL('image/png');
+      URL.revokeObjectURL(objUrl);
+      const area = SLOTS[stateRef.current.template];
+      if (!area) return;
+      const k = Math.max(area.w / cw, area.h / ch);
+      const w = cw * k, h = ch * k;
+      setState((s) => ({ ...s, ['t' + s.template]: { ...s['t' + s.template], photo: { src, x: (area.w - w) / 2, y: (area.h - h) / 2, w, h, bw: w } } }));
+      setSelected(true); setTab('photo');
     };
-    fr.readAsDataURL(file);
+    img.onerror = () => { URL.revokeObjectURL(objUrl); showToast('사진을 읽지 못했어요'); };
+    img.src = objUrl;
   }, [setState]);
   const openFile = useCallback(() => fileRef.current && fileRef.current.click(), []);
   const photo = data.photo;
@@ -192,9 +201,10 @@ export default function App({ mock } = {}) {
     setSelected(false);
     await new Promise((r) => setTimeout(r, 80));
     await document.fonts.ready;
-    const opts = { width: size.w, height: size.h, pixelRatio: ratio, filter: (n) => !(n.classList && n.classList.contains('noexport')), backgroundColor: '#ffffff', quality: 0.95 };
     const node = canvasRef.current;
-    await toPng(node, opts);
+    // 폰트 CSS는 템플릿별로 한 번만 만들어 재사용 (이후 저장이 훨씬 빨라짐)
+    if (!fontCss.current[tpl]) fontCss.current[tpl] = await getFontEmbedCSS(node);
+    const opts = { width: size.w, height: size.h, pixelRatio: ratio, filter: (n) => !(n.classList && n.classList.contains('noexport')), backgroundColor: '#ffffff', quality: 0.95, fontEmbedCSS: fontCss.current[tpl] };
     return fmt === 'png' ? toPng(node, opts) : toJpeg(node, opts);
   };
   const doExport = async () => {
@@ -240,7 +250,16 @@ export default function App({ mock } = {}) {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const common = { scale, onPhoto: setPhoto, selected, setSelected, onAddPhoto: openFile };
+  // 사진 드래그는 화면 프레임당 한 번만 반영 (끌 때 버벅임 방지)
+  const setPhotoFrame = useCallback((p) => {
+    pendingPhoto.current = p;
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => { rafRef.current = 0; const v = pendingPhoto.current; pendingPhoto.current = null; if (v !== null) setPhoto(v); });
+  }, [key]); // eslint-disable-line
+  const stage = useMemo(
+    () => renderTemplate(tpl, data, { scale, onPhoto: setPhotoFrame, selected, setSelected, onAddPhoto: openFile }),
+    [tpl, data, scale, selected, setPhotoFrame, openFile]
+  );
   const out = `${Math.round(size.w * ratio)} × ${Math.round(size.h * ratio)}px`;
   const savedLabel = savedAt ? `${pad(savedAt.getHours())}:${pad(savedAt.getMinutes())} 자동 저장됨` : '자동 저장';
 
@@ -289,7 +308,7 @@ export default function App({ mock } = {}) {
           >
             <div className="ui-stage" style={{ width: size.w * scale, height: size.h * scale }}>
               <div className="ui-scaler" style={{ transform: `scale(${scale})` }}>
-                <div ref={canvasRef} style={{ width: size.w, height: size.h }}>{renderTemplate(tpl, data, common)}</div>
+                <div ref={canvasRef} style={{ width: size.w, height: size.h }}>{stage}</div>
               </div>
             </div>
             {dragOver && <div className="ui-drop">여기에 사진을 놓으세요</div>}

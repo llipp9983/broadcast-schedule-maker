@@ -16,10 +16,11 @@ let win;
 function createWindow() {
   win = new BrowserWindow({
     width: 1440, height: 900, minWidth: 1180, minHeight: 680,
-    title: '방송시간표 메이커', backgroundColor: '#1e1e2a',
+    title: '방송시간표 메이커', backgroundColor: '#15151d', show: false,
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false },
   });
   Menu.setApplicationMenu(null);
+  win.once('ready-to-show', () => win.show());
   if (process.env.VITE_DEV_URL) win.loadURL(process.env.VITE_DEV_URL);
   else win.loadURL('app://local/index.html');
 }
@@ -86,7 +87,8 @@ app.whenReady().then(() => {
   ipcMain.handle('reveal', (_e, p) => { if (p) shell.showItemInFolder(p); });
 
   createWindow();
-  setupUpdater();
+  // 업데이트 확인은 화면이 뜬 뒤에 (시작 속도에 영향 없게)
+  win.webContents.once('did-finish-load', () => setTimeout(setupUpdater, 4000));
 });
 
 app.on('window-all-closed', () => app.quit());

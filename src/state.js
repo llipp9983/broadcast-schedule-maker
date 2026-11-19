@@ -80,12 +80,24 @@ export const defaultState = () => ({
 });
 
 const KEY = 'bsm-state-v1';
+const PHOTO_KEY = (k) => 'bsm-photo-' + k;
+const photoCache = {}; // 마지막으로 저장한 사진 (바뀔 때만 다시 저장)
+
 export function loadState() {
   const d = defaultState();
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return d;
-    return mergeState(d, JSON.parse(raw));
+    const st = mergeState(d, JSON.parse(raw));
+    for (const k of Object.keys(st)) {
+      const ph = st[k] && st[k].photo;
+      if (ph && ph.src === '@ref') {
+        const src = localStorage.getItem(PHOTO_KEY(k));
+        st[k] = { ...st[k], photo: src ? { ...ph, src } : null };
+        if (src) photoCache[k] = src;
+      } else if (ph) photoCache[k] = ph.src;
+    }
+    return st;
   } catch { return d; }
 }
 export function mergeState(d, s) {
@@ -97,12 +109,18 @@ export function mergeState(d, s) {
   return out;
 }
 export function saveState(s) {
-  try { localStorage.setItem(KEY, JSON.stringify(s)); }
-  catch {
-    try {
-      const c = { ...s };
-      for (const k of Object.keys(c)) if (c[k] && c[k].photo) c[k] = { ...c[k], photo: null };
-      localStorage.setItem(KEY, JSON.stringify(c));
-    } catch {}
+  const slim = { ...s };
+  for (const k of Object.keys(s)) {
+    const ph = s[k] && s[k].photo;
+    if (ph && ph.src) {
+      if (photoCache[k] !== ph.src) {
+        try { localStorage.setItem(PHOTO_KEY(k), ph.src); photoCache[k] = ph.src; } catch { photoCache[k] = undefined; }
+      }
+      slim[k] = { ...s[k], photo: photoCache[k] === ph.src ? { ...ph, src: '@ref' } : null };
+    } else if (photoCache[k] !== undefined && s[k] && 'photo' in s[k]) {
+      try { localStorage.removeItem(PHOTO_KEY(k)); } catch {}
+      photoCache[k] = undefined;
+    }
   }
+  try { localStorage.setItem(KEY, JSON.stringify(slim)); } catch {}
 }
