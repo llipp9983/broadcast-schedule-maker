@@ -27,11 +27,22 @@
 - **오프라인 사용** — 한글 폰트와 모든 리소스가 프로그램에 포함되어 인터넷 없이 동작합니다.
 - **자동 업데이트** — 인터넷이 연결되어 있을 때만 새 버전을 확인하고, "업데이트 하시겠어요?" 안내가 뜹니다. 인터넷이 없으면 확인 없이 바로 실행됩니다.
 
-## 설치 방법 (사용자)
+## 다운로드
 
-1. [Releases](https://github.com/llipp9983/broadcast-schedule-maker/releases) 페이지에서 최신 `BroadcastScheduleMaker-Setup-x.x.x.exe`를 다운로드합니다.
-2. 실행하여 설치합니다.
-3. > **Windows 경고 안내**: 코드 서명 인증서(유료)를 사용하지 않아 첫 실행 시 "Windows의 PC 보호" 경고가 나타날 수 있습니다. **추가 정보 → 실행**을 눌러 진행하세요.
+[Releases](https://github.com/llipp9983/broadcast-schedule-maker/releases) 페이지에서 원하는 버전을 받으세요.
+
+| 파일 | 설명 |
+|------|------|
+| `BroadcastScheduleMaker-Setup-x.x.x.exe` | **설치 버전** — 설치 후 시작 메뉴/바탕화면에서 실행, 새 버전이 나오면 자동 업데이트 안내 |
+| `BroadcastScheduleMaker-Portable-x.x.x.exe` | **포터블 버전** — 설치 없이 더블클릭으로 바로 실행. USB에 넣어 다녀도 됩니다 |
+
+### 포터블 버전 안내
+- 입력 내용과 설정은 실행 파일 옆의 `방송시간표-데이터` 폴더에 저장됩니다. 파일을 옮길 때 이 폴더도 함께 옮기면 작업 내용이 유지됩니다.
+- 새 버전이 나오면 안내 창이 뜨고, 다운로드 페이지에서 새 포터블 파일을 받아 교체하면 됩니다. (자동 교체는 설치 버전만 지원)
+- 처음 실행 시 파일 압축을 푸는 데 몇 초 걸릴 수 있습니다.
+
+### Windows 경고 안내
+코드 서명 인증서(유료)를 사용하지 않아 첫 실행 시 "Windows의 PC 보호" 경고가 나타날 수 있습니다. **추가 정보 → 실행**을 눌러 진행하세요.
 
 ## 사용 방법
 
@@ -61,7 +72,7 @@
 ```bash
 npm install
 npm run start     # 빌드 후 앱 실행
-npm run dist      # Windows 설치 파일 생성 (release/ 폴더)
+npm run dist      # 설치 파일 + 포터블 파일 생성 (release/ 폴더)
 ```
 
 기술 스택: Electron, React, Vite, html-to-image, electron-updater, electron-builder
@@ -70,10 +81,10 @@ npm run dist      # Windows 설치 파일 생성 (release/ 폴더)
 
 1. `package.json`의 `version`을 올립니다. (예: `1.0.1`)
 2. `npm run dist`로 설치 파일을 만듭니다.
-3. `release/` 폴더의 `BroadcastScheduleMaker-Setup-x.x.x.exe`, `.exe.blockmap`, `latest.yml` 세 파일을 GitHub Release(태그 `v1.0.1`)에 업로드합니다.
+3. `release/` 폴더의 `BroadcastScheduleMaker-Setup-x.x.x.exe`, `.exe.blockmap`, `latest.yml`, `BroadcastScheduleMaker-Portable-x.x.x.exe` 네 파일을 GitHub Release(태그 `v1.0.1`)에 업로드합니다.
 
 ```bash
-gh release create v1.0.1 release/BroadcastScheduleMaker-Setup-1.0.1.exe release/BroadcastScheduleMaker-Setup-1.0.1.exe.blockmap release/latest.yml --title "v1.0.1"
+gh release create v1.0.1 release/BroadcastScheduleMaker-Setup-1.0.1.exe release/BroadcastScheduleMaker-Setup-1.0.1.exe.blockmap release/latest.yml release/BroadcastScheduleMaker-Portable-1.0.1.exe --title "v1.0.1"
 ```
 
 설치된 프로그램은 실행 시 `latest.yml`을 확인해 새 버전을 안내합니다.
