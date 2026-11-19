@@ -6,137 +6,193 @@
 .slot-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 700; color: var(--accent); opacity: .55; pointer-events: none; }
 .slot-sel { position: absolute; outline: 3px dashed #fff; box-shadow: 0 0 0 1px #0007; pointer-events: none; z-index: 30; }
 .slot-sel .handle { pointer-events: auto; z-index: 31; }
-.nw1, .t3-text, .t4-text, .t5-text, .t6-line span, .t8-text, .t10-bar { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.t3-text, .t4-text, .t5-text, .t6-line span, .t8-text, .t10-bar { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+/* 광택 하이라이트 (칩/캡슐 공용) */
+.gloss { position: relative; }
+.gloss::after, .t3-day::after, .t3-time::after, .t4-tag::after, .t5-day::after, .t6-day::after, .t8-date::after, .t10-bar::after, .t10-ticket::after {
+  content: ''; position: absolute; left: 6%; right: 6%; top: 5%; height: 42%; border-radius: inherit; background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0)); pointer-events: none;
+}
+.t3-day, .t3-time, .t4-tag, .t5-day, .t6-day, .t8-date, .t10-bar, .t10-ticket { position: relative; }
 
 /* ───── 템플릿 3 · 큐티 핑크 ───── */
-.t3 { background-color: var(--bg); background-image: repeating-linear-gradient(45deg, transparent 0 46px, rgba(255,255,255,.07) 46px 49px), repeating-linear-gradient(-45deg, transparent 0 46px, rgba(255,255,255,.07) 46px 49px); }
-.t3-frame { position: absolute; inset: -16px; border: 16px solid var(--accent); border-radius: 62px; box-shadow: inset 0 0 0 8px #fff, 0 0 0 6px #fff; pointer-events: none; }
-.t3-name { position: absolute; left: 50%; bottom: -44px; transform: translateX(-50%); background: #fff; color: var(--accent); border: 6px solid var(--accent); border-radius: 50px; padding: 4px 40px; font: 400 44px 'Jua'; white-space: nowrap; pointer-events: none; }
-.t3-panel { position: absolute; left: 900px; top: 70px; width: 960px; height: 950px; background: var(--panel); border: 10px solid var(--accent); border-radius: 56px; box-shadow: 0 0 0 8px #fff; }
-.t3-title { position: absolute; left: 50%; top: -52px; transform: translateX(-50%); background: var(--accent); color: #fff; font: 400 84px/1.3 'Jua'; padding: 0 56px; border-radius: 60px; border: 8px solid #fff; white-space: nowrap; text-shadow: 4px 4px 0 rgba(0,0,0,.15); }
-.t3-badge { position: absolute; left: 0; right: 0; top: 76px; text-align: center; font: 400 34px 'Jua'; color: var(--accent); }
-.t3-rows { position: absolute; left: 40px; right: 40px; top: 140px; bottom: 36px; display: flex; flex-direction: column; gap: 14px; }
-.t3-row { flex: 1; display: flex; align-items: center; gap: 22px; background: #fff; border: 5px solid var(--accent); border-radius: 60px; padding: 0 20px; }
-.t3-day { width: 104px; height: 62px; border-radius: 40px; color: #fff; font: 400 32px 'Jua'; display: flex; align-items: center; justify-content: center; }
+.t3 { background-color: var(--bg); background-image: radial-gradient(ellipse at 20% 0%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 55%), radial-gradient(ellipse at 100% 100%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 55%), repeating-linear-gradient(45deg, transparent 0 46px, color-mix(in srgb, var(--accent) 22%, transparent) 46px 48px), repeating-linear-gradient(-45deg, transparent 0 46px, color-mix(in srgb, var(--accent) 22%, transparent) 46px 48px); }
+.t3-bokeh { position: absolute; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent), transparent 68%); pointer-events: none; }
+.t3-bokeh.a { left: -140px; top: -160px; width: 560px; height: 560px; }
+.t3-bokeh.b { right: -120px; bottom: -180px; width: 640px; height: 640px; }
+.t3-bokeh.c { left: 800px; top: 420px; width: 220px; height: 220px; opacity: .6; }
+.t3-frame { position: absolute; inset: -18px; border: 18px solid var(--accent); border-radius: 66px; box-shadow: 0 0 0 7px #fff, 0 0 0 14px color-mix(in srgb, var(--accent) 55%, #fff), inset 0 0 0 7px #fff, 0 18px 34px rgba(0,0,0,.4); pointer-events: none; }
+.t3-frame::after { content: ''; position: absolute; inset: 8px; border: 4px dashed rgba(255,255,255,.85); border-radius: 46px; }
+.t3-name { position: absolute; left: 50%; bottom: -52px; transform: translateX(-50%); background: linear-gradient(180deg, #fff, color-mix(in srgb, var(--accent) 12%, #fff)); color: var(--accent); border: 7px solid var(--accent); border-radius: 56px; padding: 6px 48px 6px 58px; font: 400 46px 'Jua'; white-space: nowrap; pointer-events: none; box-shadow: 0 8px 0 color-mix(in srgb, var(--accent) 60%, #000), 0 14px 20px rgba(0,0,0,.35); }
+.t3-panel { position: absolute; left: 900px; top: 76px; width: 960px; height: 940px; background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 60%, #fff), var(--panel)); border: 12px solid var(--accent); border-radius: 62px; box-shadow: 0 0 0 8px #fff, 0 0 0 16px color-mix(in srgb, var(--accent) 50%, #fff), 0 22px 40px rgba(0,0,0,.4); }
+.t3-panel::before { content: ''; position: absolute; inset: 12px; border: 4px dotted color-mix(in srgb, var(--accent) 70%, #fff); border-radius: 46px; pointer-events: none; }
+.t3-title { position: absolute; left: 50%; top: -64px; transform: translateX(-50%); background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 70%, #fff), var(--accent) 60%); color: #fff; font: 400 88px/1.25 'Jua'; padding: 0 64px; border-radius: 64px; border: 9px solid #fff; white-space: nowrap; text-shadow: 0 5px 0 color-mix(in srgb, var(--accent) 60%, #000), 0 0 18px rgba(255,255,255,.5); box-shadow: 0 8px 0 color-mix(in srgb, var(--accent) 60%, #000), 0 16px 20px rgba(0,0,0,.3); }
+.t3-badge { position: absolute; left: 0; right: 0; top: 78px; text-align: center; font: 400 36px 'Jua'; color: var(--accent); letter-spacing: 2px; }
+.t3-rows { position: absolute; left: 44px; right: 44px; top: 142px; bottom: 40px; display: flex; flex-direction: column; gap: 14px; }
+.t3-row { flex: 1; display: flex; align-items: center; gap: 22px; background: linear-gradient(180deg, #fff, color-mix(in srgb, var(--accent) 8%, #fff)); border: 5px solid var(--accent); border-radius: 60px; padding: 0 18px; box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 45%, transparent), inset 0 3px 0 #fff; }
+.t3-day { width: 112px; height: 64px; border-radius: 40px; color: #fff; font: 400 32px 'Jua'; display: flex; align-items: center; justify-content: center; text-shadow: 0 2px 0 rgba(0,0,0,.2); box-shadow: 0 4px 0 rgba(0,0,0,.12); }
 .t3-text { flex: 1; font: 400 38px 'Jua'; color: var(--text); }
-.t3-time { font: 400 32px 'Jua'; color: var(--accent); border: 4px solid var(--accent); border-radius: 30px; padding: 2px 20px; background: var(--panel); }
+.t3-time { font: 400 32px 'Jua'; color: #fff; border-radius: 30px; padding: 4px 26px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 70%, #fff), var(--accent)); text-shadow: 0 2px 0 rgba(0,0,0,.18); box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 60%, #000); }
 
 /* ───── 템플릿 4 · 스카이 클라우드 ───── */
-.t4 { background: linear-gradient(180deg, #fff 0%, var(--bg) 55%); }
-.t4-band { position: absolute; left: -200px; top: -100px; width: 700px; height: 1300px; background: rgba(255,255,255,.4); transform: skewX(-18deg); }
-.t4-band.b2 { left: 900px; width: 380px; background: color-mix(in srgb, var(--accent) 14%, transparent); }
-.t4-clouds { position: absolute; left: 0; top: 0; pointer-events: none; }
-.t4-title { position: absolute; left: 70px; top: 30px; font: 900 124px/1 'Montserrat'; color: #fff; -webkit-text-stroke: 14px var(--accent); paint-order: stroke fill; letter-spacing: 4px; }
-.t4-rows { position: absolute; left: 50px; top: 190px; display: flex; flex-direction: column; gap: 22px; }
-.t4-row { width: 960px; height: 86px; display: flex; align-items: center; background: linear-gradient(90deg, #fff, #f2fbff); border-radius: 50px; box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 35%, transparent); padding-right: 34px; }
-.t4-tag { width: 230px; height: 100%; border-radius: 50px; color: #fff; font: italic 800 44px 'Montserrat'; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.t4 { background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 40%, #fff) 0%, var(--bg) 55%, color-mix(in srgb, var(--bg) 75%, var(--accent)) 100%); }
+.t4-band { position: absolute; left: -200px; top: -100px; width: 700px; height: 1300px; background: rgba(255,255,255,.32); transform: skewX(-18deg); }
+.t4-band.b2 { left: 940px; width: 300px; background: rgba(255,255,255,.2); }
+.t4-dots { position: absolute; inset: 0; background: radial-gradient(circle, rgba(255,255,255,.7) 3px, transparent 4px) 0 0/76px 76px; opacity: .35; }
+.t4-title { position: absolute; left: 66px; top: 24px; font: 900 128px/1.05 'Montserrat'; color: var(--accent); -webkit-text-stroke: 18px #fff; paint-order: stroke fill; letter-spacing: 4px; filter: drop-shadow(0 8px 0 color-mix(in srgb, var(--accent) 70%, #002)) drop-shadow(0 16px 14px rgba(0,60,120,.3)); }
+.t4-rows { position: absolute; left: 50px; top: 196px; display: flex; flex-direction: column; gap: 22px; }
+.t4-row { width: 960px; height: 86px; display: flex; align-items: center; background: linear-gradient(180deg, #fff, #eaf7ff); border-radius: 50px; box-shadow: 0 7px 0 color-mix(in srgb, var(--accent) 45%, transparent), 0 12px 16px rgba(30,100,170,.18), inset 0 3px 0 #fff; padding-right: 22px; }
+.t4-tag { width: 232px; height: 100%; border-radius: 50px; color: #fff; font: italic 800 46px 'Montserrat'; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 65%, #fff), var(--accent)); text-shadow: 0 3px 0 rgba(0,40,90,.25); box-shadow: 0 5px 0 color-mix(in srgb, var(--accent) 60%, #002); }
 .t4-text { flex: 1; margin-left: 28px; font: 700 36px 'Noto Sans KR Variable'; color: var(--text); }
-.t4-time { font: 800 34px 'Montserrat'; color: var(--accent); }
-.t4-frame { position: absolute; inset: -24px; border: 24px solid #fff; border-radius: 56px; box-shadow: 0 0 0 6px var(--accent), 0 14px 30px rgba(0,0,0,.15); pointer-events: none; }
+.t4-time { font: 800 32px 'Montserrat'; color: #fff; background: var(--accent); padding: 2px 22px; border-radius: 30px; }
+.t4-frame { position: absolute; inset: -26px; border: 26px solid #fff; border-radius: 60px; box-shadow: 0 0 0 7px var(--accent), 0 20px 36px rgba(0,50,110,.3); pointer-events: none; }
+.t4-frame::after { content: ''; position: absolute; inset: 2px; border: 4px dashed color-mix(in srgb, var(--accent) 70%, #fff); border-radius: 36px; }
 .t4-badges { position: absolute; left: 1240px; top: 830px; width: 600px; display: flex; flex-direction: column; gap: 14px; align-items: center; }
-.t4-pill { background: #fff; color: var(--accent); border: 6px solid var(--accent); border-radius: 50px; padding: 4px 36px; font: 800 36px 'Montserrat'; }
-.t4-pill.alt { background: var(--accent); color: #fff; border-color: #fff; }
+.t4-pill { background: linear-gradient(180deg, #fff, #e6f5ff); color: var(--accent); border: 6px solid var(--accent); border-radius: 50px; padding: 4px 38px; font: 800 36px 'Montserrat'; box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 50%, #002); }
+.t4-pill.alt { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 65%, #fff), var(--accent)); color: #fff; border-color: #fff; }
 
 /* ───── 템플릿 5 · 라벤더 폴라로이드 ───── */
-.t5 { background: linear-gradient(160deg, #fbf6ff, var(--bg) 60%, color-mix(in srgb, var(--accent) 45%, #fff)); }
-.t5::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent 0 58px, rgba(255,255,255,.45) 58px 60px), repeating-linear-gradient(-45deg, transparent 0 58px, rgba(255,255,255,.45) 58px 60px); }
-.t5-sheet { position: absolute; left: 1130px; top: 140px; width: 560px; height: 650px; background: #fff; transform: rotate(5deg); box-shadow: 0 10px 30px rgba(120,90,200,.25); }
-.t5-card { position: absolute; left: 1050px; top: 195px; width: 560px; height: 650px; background: #fff; border-radius: 10px; transform: rotate(-10deg); box-shadow: 0 14px 34px rgba(100,70,180,.3); }
-.t5-title { position: absolute; left: 60px; top: 36px; width: 800px; text-align: center; font: 900 124px/1.1 'Montserrat'; letter-spacing: 2px; background: linear-gradient(180deg, #b9a6ff, #7fd8ff 55%, #ffb4e1); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(3px 0 0 var(--text)) drop-shadow(-3px 0 0 var(--text)) drop-shadow(0 3px 0 var(--text)) drop-shadow(0 -3px 0 var(--text)) drop-shadow(0 8px 0 var(--text)); }
+.t5 { background: linear-gradient(160deg, #fdf9ff, var(--bg) 55%, color-mix(in srgb, var(--accent) 50%, #fff)); }
+.t5::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent 0 58px, rgba(255,255,255,.5) 58px 60px), repeating-linear-gradient(-45deg, transparent 0 58px, rgba(255,255,255,.5) 58px 60px); }
+.t5-orb { position: absolute; border-radius: 50%; pointer-events: none; }
+.t5-orb.a { left: 760px; top: -120px; width: 520px; height: 520px; background: radial-gradient(circle, rgba(160,230,255,.55), transparent 68%); }
+.t5-orb.b { left: 1300px; top: 600px; width: 640px; height: 640px; background: radial-gradient(circle, rgba(255,190,235,.55), transparent 68%); }
+.t5-orb.c { left: -160px; top: 760px; width: 560px; height: 560px; background: radial-gradient(circle, rgba(190,170,255,.55), transparent 68%); }
+.t5-sheet { position: absolute; left: 1130px; top: 140px; width: 560px; height: 650px; background: repeating-linear-gradient(180deg, #fff 0 38px, #efe8ff 38px 40px); transform: rotate(5deg); box-shadow: 0 12px 30px rgba(120,90,200,.28); }
+.t5-card { position: absolute; left: 1050px; top: 195px; width: 560px; height: 650px; background: linear-gradient(180deg, #fff, #f6f1ff); border-radius: 10px; transform: rotate(-10deg); box-shadow: 0 18px 40px rgba(100,70,180,.38), inset 0 0 0 2px #fff; }
+.t5-title { position: absolute; left: 60px; top: 30px; width: 800px; text-align: center; font: 900 128px/1.1 'Montserrat'; letter-spacing: 2px; background: linear-gradient(180deg, #c8b8ff, #7fd8ff 50%, #ffb4e1); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(3px 0 0 var(--text)) drop-shadow(-3px 0 0 var(--text)) drop-shadow(0 3px 0 var(--text)) drop-shadow(0 -3px 0 var(--text)) drop-shadow(0 9px 0 var(--text)) drop-shadow(0 16px 12px rgba(80,50,160,.3)); }
 .t5-rows { position: absolute; left: 60px; top: 200px; width: 800px; display: flex; flex-direction: column; gap: 16px; }
-.t5-row { height: 100px; display: flex; align-items: center; background: #fff; border-radius: 50px; box-shadow: 0 8px 18px rgba(130,100,200,.22); padding: 0 30px 0 20px; gap: 18px; }
-.t5-day { width: 68px; height: 68px; flex-shrink: 0; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #8fd8ff); color: #fff; font: 800 34px 'Noto Sans KR Variable'; display: flex; align-items: center; justify-content: center; }
+.t5-row { height: 100px; display: flex; align-items: center; gap: 18px; padding: 0 30px 0 18px; border: 4px solid transparent; border-radius: 52px; background: linear-gradient(#fff, #fbf8ff) padding-box, linear-gradient(90deg, #cdb8ff, #9fe3ff, #ffc2e8) border-box; box-shadow: 0 10px 20px rgba(130,100,200,.22); }
+.t5-day { width: 68px; height: 68px; flex-shrink: 0; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #8fd8ff); color: #fff; font: 800 34px 'Noto Sans KR Variable'; display: flex; align-items: center; justify-content: center; text-shadow: 0 2px 0 rgba(0,0,0,.18); box-shadow: 0 4px 0 rgba(90,70,160,.25); }
 .t5-bar { width: 6px; height: 50px; border-radius: 3px; background: linear-gradient(var(--accent), #8fd8ff); }
 .t5-text { flex: 1; font: 700 34px 'Noto Sans KR Variable'; color: var(--text); }
 .t5-time { font: 800 32px 'Montserrat'; color: var(--accent); }
 .t5-info { position: absolute; left: 1020px; top: 900px; width: 620px; display: flex; justify-content: center; align-items: center; gap: 18px; font-weight: 700; font-size: 32px; color: var(--text); }
-.t5-info .b { background: var(--accent); color: #fff; padding: 2px 24px; border-radius: 30px; }
+.t5-info .b { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 70%, #fff), var(--accent)); color: #fff; padding: 2px 26px; border-radius: 30px; box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 60%, #000); }
 
 /* ───── 템플릿 6 · 하트 프레임 ───── */
-.t6 { background-color: var(--bg); background-image: linear-gradient(color-mix(in srgb, var(--accent) 18%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--accent) 18%, transparent) 2px, transparent 2px); background-size: 44px 44px; }
-.t6-title { position: absolute; left: 60px; top: 30px; font: 900 100px/1.2 'Montserrat'; color: #fff; -webkit-text-stroke: 16px var(--accent); paint-order: stroke fill; filter: drop-shadow(0 8px 0 color-mix(in srgb, var(--accent) 60%, #000)); }
-.t6-card { position: absolute; left: 50px; top: 170px; width: 900px; height: 870px; background: var(--panel); border: 8px solid #fff; border-radius: 56px; box-shadow: 14px 14px 0 var(--accent); padding: 30px 34px; display: flex; flex-direction: column; gap: 14px; }
-.t6-row { flex: 1; display: flex; align-items: center; gap: 22px; background: #fff; border-radius: 50px; padding: 0 30px 0 12px; box-shadow: 0 5px 14px rgba(120,90,200,.15); }
-.t6-day { width: 150px; height: 70%; border-radius: 40px; color: #fff; font: 800 32px 'Montserrat'; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.t6 { background-color: var(--bg); background-image: linear-gradient(color-mix(in srgb, var(--accent) 16%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--accent) 16%, transparent) 2px, transparent 2px); background-size: 44px 44px; }
+.t6-glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 75% 40%, rgba(255,255,255,.85), transparent 55%), radial-gradient(ellipse at 0% 100%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 55%); }
+.t6-title { position: absolute; left: 60px; top: 26px; font: 900 104px/1.2 'Montserrat'; color: #fff; -webkit-text-stroke: 18px var(--accent); paint-order: stroke fill; filter: drop-shadow(0 8px 0 color-mix(in srgb, var(--accent) 55%, #000)) drop-shadow(0 16px 14px rgba(70,40,160,.35)); }
+.t6-card { position: absolute; left: 50px; top: 170px; width: 900px; height: 870px; background: linear-gradient(180deg, #fff, var(--panel)); border: 8px solid #fff; border-radius: 58px; box-shadow: 14px 14px 0 var(--accent), 0 24px 40px rgba(70,40,160,.3); padding: 30px 34px; display: flex; flex-direction: column; gap: 14px; }
+.t6-card::before { content: ''; position: absolute; inset: 10px; border: 3px dashed color-mix(in srgb, var(--accent) 45%, #fff); border-radius: 46px; pointer-events: none; }
+.t6-row { flex: 1; display: flex; align-items: center; gap: 22px; background: #fff; border-radius: 50px; padding: 0 30px 0 12px; box-shadow: 0 6px 14px rgba(120,90,200,.2), inset 0 -3px 0 color-mix(in srgb, var(--accent) 18%, #fff); }
+.t6-day { width: 154px; height: 72%; border-radius: 40px; color: #fff; font: 800 32px 'Montserrat'; display: flex; align-items: center; justify-content: center; flex-shrink: 0; text-shadow: 0 2px 0 rgba(0,0,0,.22); box-shadow: 0 4px 0 rgba(70,40,160,.3); }
 .t6-line { flex: 1; min-width: 0; border-bottom: 3px dashed color-mix(in srgb, var(--accent) 55%, transparent); height: 52px; display: flex; align-items: flex-end; padding-bottom: 2px; }
 .t6-line span { font: 700 32px 'Noto Sans KR Variable'; color: var(--text); }
 .t6-time { font: 800 32px 'Montserrat'; color: var(--accent); }
-.t6-heart { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; filter: drop-shadow(0 10px 20px rgba(100,70,200,.3)); }
+.t6-heart { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; filter: drop-shadow(0 14px 22px rgba(80,50,180,.4)); }
 .t6-info { position: absolute; left: 1020px; top: 890px; width: 760px; display: flex; gap: 20px; justify-content: center; }
-.t6-pill { background: #fff; color: var(--accent); border: 6px solid var(--accent); border-radius: 50px; padding: 4px 36px; font: 800 34px 'Montserrat'; }
-.t6-pill.alt { background: var(--accent); color: #fff; border-color: #fff; }
+.t6-pill { background: linear-gradient(180deg, #fff, #efe9ff); color: var(--accent); border: 6px solid var(--accent); border-radius: 50px; padding: 4px 38px; font: 800 34px 'Montserrat'; box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 55%, #000); }
+.t6-pill.alt { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 65%, #fff), var(--accent)); color: #fff; border-color: #fff; }
 
 /* ───── 템플릿 7 · 노트 다이어리 ───── */
-.t7 { background: var(--bg); }
-.t7-edge { position: absolute; inset: 0; border: 22px solid var(--accent); box-shadow: inset 0 0 0 8px #fff; }
-.t7-frame { position: absolute; inset: -18px; border: 14px solid var(--accent); border-radius: 42px; box-shadow: inset 0 0 0 6px #fff; pointer-events: none; }
-.t7-tape { position: absolute; width: 150px; height: 50px; background: repeating-conic-gradient(color-mix(in srgb, var(--accent) 70%, #fff) 0 25%, rgba(255,255,255,.8) 0 50%) 0 0 / 25px 25px; opacity: .92; pointer-events: none; }
-.t7-note { position: absolute; left: 70px; top: 760px; width: 620px; height: 240px; background: #fff; border-radius: 34px; box-shadow: 0 8px 20px rgba(120,90,200,.18); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-family: 'Jua'; }
-.t7-sns { font-size: 54px; color: var(--accent); }
+.t7 { background: radial-gradient(ellipse at 30% 20%, #fff, var(--bg) 70%); }
+.t7-edge { position: absolute; inset: 0; pointer-events: none; }
+.t7-edge i { position: absolute; display: block; }
+.t7-edge .e1, .t7-edge .e2 { left: 0; right: 0; height: 40px; background: radial-gradient(circle at 20px 0, var(--accent) 20px, transparent 21px) 0 0/40px 40px repeat-x; }
+.t7-edge .e1 { top: 0; box-shadow: 0 -14px 0 14px var(--accent); }
+.t7-edge .e2 { bottom: 0; transform: scaleY(-1); box-shadow: 0 -14px 0 14px var(--accent); }
+.t7-edge .e3, .t7-edge .e4 { top: 0; bottom: 0; width: 40px; background: radial-gradient(circle at 0 20px, var(--accent) 20px, transparent 21px) 0 0/40px 40px repeat-y; }
+.t7-edge .e3 { left: 0; box-shadow: -14px 0 0 14px var(--accent); }
+.t7-edge .e4 { right: 0; transform: scaleX(-1); box-shadow: -14px 0 0 14px var(--accent); }
+.t7-frame { position: absolute; inset: -20px; border: 16px solid var(--accent); border-radius: 44px; box-shadow: inset 0 0 0 7px #fff, 0 0 0 5px #fff, 0 14px 26px rgba(120,90,200,.3); pointer-events: none; }
+.t7-frame::after { content: ''; position: absolute; inset: 6px; border: 3px dashed #fff; border-radius: 30px; opacity: .9; }
+.t7-tape { position: absolute; width: 160px; height: 52px; background: repeating-conic-gradient(color-mix(in srgb, var(--accent) 70%, #fff) 0 25%, rgba(255,255,255,.85) 0 50%) 0 0 / 26px 26px; opacity: .95; pointer-events: none; box-shadow: 0 3px 6px rgba(0,0,0,.15); z-index: 4; }
+.t7-note { position: absolute; left: 70px; top: 770px; width: 620px; height: 230px; background: #fff; border-radius: 34px; box-shadow: 0 10px 22px rgba(120,90,200,.25); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-family: 'Jua'; background-image: repeating-linear-gradient(180deg, transparent 0 46px, #efe8ff 46px 48px); }
+.t7-sns { font-size: 54px; color: var(--accent); text-shadow: 2px 2px 0 #fff; }
 .t7-date { font-size: 44px; color: var(--text); }
-.t7-panel { position: absolute; left: 760px; top: 90px; width: 1080px; height: 900px; background: #fff; border-radius: 64px; border: 4px solid color-mix(in srgb, var(--accent) 40%, #fff); box-shadow: 0 10px 30px rgba(120,90,200,.18); }
-.t7-title { position: absolute; left: 50%; top: -52px; transform: translateX(-50%); font: 400 84px/1.2 'Jua'; color: #fff; -webkit-text-stroke: 14px var(--accent); paint-order: stroke fill; white-space: nowrap; }
-.t7-rows { position: absolute; left: 80px; right: 80px; top: 110px; bottom: 50px; display: flex; flex-direction: column; border-top: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+.t7-panel { position: absolute; left: 760px; top: 100px; width: 1080px; height: 880px; background: linear-gradient(180deg, #fff, #fdfaff); border-radius: 64px; border: 4px solid color-mix(in srgb, var(--accent) 45%, #fff); box-shadow: 0 0 0 10px color-mix(in srgb, var(--accent) 22%, transparent), 0 16px 34px rgba(120,90,200,.25); }
+.t7-title { position: absolute; left: 50%; top: -56px; transform: translateX(-50%); font: 400 88px/1.2 'Jua'; color: #fff; -webkit-text-stroke: 16px var(--accent); paint-order: stroke fill; white-space: nowrap; filter: drop-shadow(0 6px 0 color-mix(in srgb, var(--accent) 60%, #000)) drop-shadow(0 12px 10px rgba(80,50,160,.25)); }
+.t7-rows { position: absolute; left: 80px; right: 80px; top: 112px; bottom: 54px; display: flex; flex-direction: column; border-top: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
 .t7-row { flex: 1; display: flex; align-items: center; border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); }
-.t7-tag { width: 140px; text-align: center; margin: 0 26px 0 6px; padding: 6px 0; border-radius: 10px; font: 800 30px 'Montserrat'; color: var(--text); flex-shrink: 0; }
+.t7-tag { width: 152px; text-align: center; margin: 0 26px 0 6px; padding: 6px 0; border-radius: 12px; font: 800 30px 'Montserrat'; color: var(--text); flex-shrink: 0; }
+.t7-tag em { font-style: normal; margin-right: 8px; color: var(--accent); }
 .t7-text { flex: 1; min-width: 0; height: 100%; border-left: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); padding-left: 28px; display: flex; align-items: center; font: 400 40px 'Jua'; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .t7-time { width: 210px; height: 100%; border-left: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); display: flex; align-items: center; justify-content: center; font: 400 38px 'Jua'; }
 
 /* ───── 템플릿 8 · 우드 클립보드 ───── */
-.t8 { background: repeating-linear-gradient(90deg, rgba(0,0,0,.035) 0 6px, transparent 6px 14px), linear-gradient(180deg, color-mix(in srgb, var(--bg) 80%, #fff), var(--bg)); }
-.t8-title { position: absolute; left: 50px; top: 34px; width: 620px; font: 900 84px/1.02 'Montserrat'; color: #fff; -webkit-text-stroke: 12px var(--accent); paint-order: stroke fill; }
-.t8-badge { position: absolute; left: 60px; top: 205px; background: #fff; color: var(--text); border: 5px solid var(--accent); border-radius: 30px; padding: 2px 26px; font: 700 28px 'Noto Sans KR Variable'; }
-.t8-board { position: absolute; left: 50px; top: 290px; width: 580px; height: 740px; background: var(--accent); border-radius: 26px; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
-.t8-clip { position: absolute; left: 50%; top: -52px; width: 150px; height: 70px; transform: translateX(-50%); background: #c9ccd3; border-radius: 12px; border: 6px solid #8d929c; pointer-events: none; z-index: 5; }
-.t8-clip i { display: block; width: 36px; height: 36px; border-radius: 50%; background: #8d929c; margin: 8px auto; }
-.t8-sns { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); background: #fff; color: var(--text); border-radius: 14px; padding: 2px 26px; font: 700 28px 'Noto Sans KR Variable'; box-shadow: 0 4px 10px rgba(0,0,0,.2); white-space: nowrap; pointer-events: none; }
+.t8 { background: repeating-linear-gradient(90deg, rgba(90,50,20,.06) 0 3px, transparent 3px 9px, rgba(255,255,255,.05) 9px 12px, transparent 12px 26px), repeating-linear-gradient(0deg, transparent 0 140px, rgba(90,50,20,.18) 140px 142px), linear-gradient(180deg, color-mix(in srgb, var(--bg) 78%, #fff), var(--bg)); }
+.t8-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(60,30,10,.35)); pointer-events: none; }
+.t8-sign { position: absolute; left: 40px; top: 28px; width: 640px; padding: 14px 20px 18px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 80%, #fff), var(--accent)); border-radius: 18px; box-shadow: 0 8px 0 color-mix(in srgb, var(--accent) 60%, #000), 0 16px 22px rgba(60,30,10,.4), inset 0 3px 0 rgba(255,255,255,.35); text-align: center; }
+.t8-title { font: 900 78px/1.02 'Montserrat'; color: #fff6e0; -webkit-text-stroke: 10px color-mix(in srgb, var(--accent) 55%, #000); paint-order: stroke fill; letter-spacing: 2px; }
+.nail { position: absolute; top: 14px; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #9aa0aa); }
+.nail.l { left: 14px; } .nail.r { right: 14px; }
+.t8-badge { position: absolute; left: 440px; top: 236px; background: linear-gradient(180deg, #fff, #f4ede4); color: var(--text); border: 5px solid var(--accent); border-radius: 30px; padding: 2px 28px; font: 700 28px 'Noto Sans KR Variable'; box-shadow: 0 5px 0 color-mix(in srgb, var(--accent) 60%, #000); }
+.t8-board { position: absolute; left: 50px; top: 300px; width: 580px; height: 730px; background: repeating-linear-gradient(90deg, rgba(0,0,0,.07) 0 4px, transparent 4px 14px), linear-gradient(180deg, color-mix(in srgb, var(--accent) 85%, #fff), var(--accent)); border-radius: 28px; box-shadow: 0 12px 0 color-mix(in srgb, var(--accent) 55%, #000), 0 22px 30px rgba(50,25,10,.45), inset 0 3px 0 rgba(255,255,255,.3); }
+.screw { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #8c929c); box-shadow: 0 2px 3px rgba(0,0,0,.4); } .screw.a { left: 18px; bottom: 18px; } .screw.b { right: 18px; bottom: 18px; }
+.t8-paperframe { position: absolute; inset: -14px; border: 14px solid #fffaf0; border-radius: 22px; box-shadow: 0 6px 14px rgba(0,0,0,.28), inset 0 0 0 2px #eadfce; pointer-events: none; }
+.t8-clip { position: absolute; left: 50%; top: -68px; width: 160px; height: 78px; transform: translateX(-50%); background: linear-gradient(180deg, #e3e6ec, #9aa0ab); border-radius: 14px; border: 6px solid #767c88; pointer-events: none; z-index: 5; box-shadow: 0 6px 8px rgba(0,0,0,.35); }
+.t8-clip i { display: block; width: 40px; height: 40px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6b717c, #50555f); margin: 9px auto; }
+.t8-sns { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); background: #fffaf0; color: var(--text); border-radius: 14px; padding: 2px 28px; font: 700 28px 'Noto Sans KR Variable'; box-shadow: 0 4px 10px rgba(0,0,0,.3); white-space: nowrap; pointer-events: none; z-index: 5; }
 .t8-rows { position: absolute; left: 700px; top: 50px; width: 1180px; bottom: 50px; display: flex; flex-direction: column; gap: 12px; }
-.t8-row { flex: 1; display: flex; width: 1130px; }
-.t8-date { width: 120px; border-radius: 16px 0 0 16px; background: var(--accent); color: #fff; font: 900 58px 'Montserrat'; display: flex; align-items: center; justify-content: center; text-shadow: 0 3px 0 rgba(0,0,0,.2); }
-.t8-bar { position: relative; flex: 1; background: #fff; border-radius: 0 18px 18px 0; display: flex; align-items: center; padding: 0 28px; gap: 22px; box-shadow: 0 5px 0 rgba(0,0,0,.12); }
-.t8-row.off .t8-bar { background: #e6e1dc; }
-.t8-row.off .t8-date { background: #a89a8e !important; }
+.t8-rope { position: absolute; left: 56px; top: 10px; bottom: 10px; border-left: 6px dashed rgba(90,50,20,.45); }
+.t8-row { flex: 1; display: flex; width: 1130px; position: relative; filter: drop-shadow(0 6px 4px rgba(60,30,10,.28)); }
+.t8-date { width: 120px; border-radius: 18px 0 0 18px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 80%, #fff), var(--accent)); color: #fff; font: 900 58px 'Montserrat'; display: flex; align-items: center; justify-content: center; text-shadow: 0 3px 0 rgba(0,0,0,.25); }
+.t8-bar { position: relative; flex: 1; background: linear-gradient(180deg, #fffdf8, #fff); border-radius: 0 20px 20px 0; display: flex; align-items: center; padding: 0 28px; gap: 22px; box-shadow: inset 0 3px 0 #fff, inset 0 -4px 0 rgba(120,80,40,.12); }
+.t8-row.off .t8-bar { background: linear-gradient(180deg, #ece7e1, #e1dbd4); }
+.t8-row.off .t8-date { background: linear-gradient(180deg, #bcaea2, #a09386) !important; }
 .t8-meta { display: flex; flex-direction: column; align-items: center; min-width: 110px; gap: 2px; }
 .t8-meta small { color: #fff; font: 800 18px 'Montserrat'; padding: 0 14px; border-radius: 10px; }
 .t8-meta b { font: 400 36px 'Jua'; color: var(--text); }
-.t8-sep { width: 3px; height: 66px; background: rgba(0,0,0,.12); }
+.t8-sep { width: 3px; height: 66px; background: rgba(120,80,40,.18); }
 .t8-text { flex: 1; font: 400 46px 'Jua'; color: var(--text); }
 .t8-row.off .t8-text { color: #8b7f76; }
-.t8-off { position: absolute; left: 50%; font: 900 54px 'Montserrat'; color: rgba(0,0,0,.09); letter-spacing: 4px; }
+.t8-off { position: absolute; left: 50%; font: 900 56px 'Montserrat'; color: rgba(90,60,40,.12); letter-spacing: 6px; }
 
 /* ───── 템플릿 9 · 나이트 카드 ───── */
-.t9 { background-color: var(--bg); background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.045) 0 40px, transparent 40px 80px); }
-.t9-stripe { position: absolute; left: 0; right: 0; height: 20px; background: var(--accent); }
-.t9-stripe.top { top: 0; box-shadow: 0 8px 0 #ffd9a8; }
-.t9-stripe.bot { bottom: 0; box-shadow: 0 -8px 0 #ffd9a8; }
-.t9-title { position: absolute; left: 60px; top: 40px; width: 600px; font: 900 76px/0.98 'Montserrat'; color: #fff; -webkit-text-stroke: 12px #1d1636; paint-order: stroke fill; }
-.t9-badge { position: absolute; left: 70px; top: 192px; background: var(--accent); color: #fff; padding: 2px 26px; border-radius: 8px; font: 800 28px 'Montserrat'; }
-.t9-photoframe { position: absolute; left: 50px; top: 235px; width: 560px; height: 630px; background: #fff; transform: rotate(-3deg); box-shadow: 0 10px 24px rgba(0,0,0,.4); }
-.t9-sticky { position: absolute; left: 330px; top: 880px; background: #ffe08a; color: #5a4a1a; padding: 14px 30px; transform: rotate(-2deg); font: 700 30px 'Noto Sans KR Variable'; box-shadow: 0 6px 12px rgba(0,0,0,.35); }
-.t9-card { position: absolute; width: 370px; height: 290px; background: var(--panel); border: 6px solid var(--accent); border-radius: 14px; box-shadow: 0 8px 20px rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; }
-.t9-card.off { background: var(--sat); border-color: color-mix(in srgb, var(--sat) 60%, #fff); }
-.t9-ribbon { position: absolute; left: 20px; top: -6px; width: 66px; height: 94px; background: var(--accent); color: #fff; font: 900 38px 'Montserrat'; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%); display: flex; align-items: flex-start; justify-content: center; padding-top: 24px; box-sizing: border-box; }
-.t9-card.off .t9-ribbon { background: #8d86a8; }
-.t9-day { position: absolute; right: 20px; top: 14px; font: 800 24px 'Montserrat'; color: color-mix(in srgb, var(--accent) 65%, #fff); }
+.t9 { background-color: var(--bg); background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 40px, transparent 40px 80px); }
+.t9-neb { position: absolute; border-radius: 50%; pointer-events: none; }
+.t9-neb.a { left: -200px; top: 400px; width: 900px; height: 900px; background: radial-gradient(circle, rgba(150,90,255,.4), transparent 65%); }
+.t9-neb.b { left: 1000px; top: -300px; width: 900px; height: 800px; background: radial-gradient(circle, rgba(255,140,90,.22), transparent 65%); }
+.t9-neb.c { left: 1200px; top: 600px; width: 800px; height: 700px; background: radial-gradient(circle, rgba(90,140,255,.28), transparent 65%); }
+.t9-stars { position: absolute; left: 0; top: 0; pointer-events: none; }
+.t9-wave { position: absolute; left: 0; right: 0; height: 44px; background: radial-gradient(circle at 24px 0, var(--accent) 22px, transparent 23px) 0 0/48px 44px repeat-x; filter: drop-shadow(0 4px 0 #ffd9a8); }
+.t9-wave::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 14px; background: var(--accent); }
+.t9-wave.top { top: 0; }
+.t9-wave.bot { bottom: 0; transform: scaleY(-1); }
+.t9-title { position: absolute; left: 60px; top: 50px; width: 600px; font: 900 78px/0.98 'Montserrat'; color: #fff; -webkit-text-stroke: 14px #1d1636; paint-order: stroke fill; filter: drop-shadow(0 0 14px rgba(255,170,90,.55)) drop-shadow(0 8px 0 #1d1636); }
+.t9-badge { position: absolute; left: 70px; top: 214px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 70%, #fff), var(--accent)); color: #fff; padding: 2px 28px; border-radius: 8px; font: 800 28px 'Montserrat'; box-shadow: 0 5px 0 color-mix(in srgb, var(--accent) 60%, #000), 0 0 18px rgba(255,150,70,.5); }
+.t9-photoframe { position: absolute; left: 50px; top: 235px; width: 560px; height: 630px; background: linear-gradient(180deg, #fff, #eee8ff); transform: rotate(-3deg); box-shadow: 0 16px 30px rgba(0,0,0,.5), 0 0 40px rgba(170,120,255,.25); }
+.t9-photoframe .pin { position: absolute; left: 50%; top: -14px; width: 28px; height: 28px; margin-left: -14px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ff9a8a, #d93a2a); box-shadow: 0 5px 6px rgba(0,0,0,.4); }
+.t9-sticky { position: absolute; left: 330px; top: 884px; background: linear-gradient(180deg, #ffeaa0, #ffd966); color: #5a4a1a; padding: 14px 30px; transform: rotate(-2deg); font: 700 30px 'Noto Sans KR Variable'; box-shadow: 0 8px 14px rgba(0,0,0,.45); }
+.t9-card { position: absolute; width: 370px; height: 290px; background: linear-gradient(180deg, #fff3e6, var(--panel)); border: 6px solid var(--accent); border-radius: 16px; box-shadow: 0 0 0 4px rgba(255,150,70,.25), 0 0 34px rgba(255,150,70,.35), 0 14px 22px rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; }
+.t9-card::before { content: ''; position: absolute; inset: 10px; border: 2px dashed color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 8px; pointer-events: none; }
+.t9-card.off { background: linear-gradient(180deg, color-mix(in srgb, var(--sat) 70%, #fff), var(--sat)); border-color: color-mix(in srgb, var(--sat) 55%, #fff); box-shadow: 0 14px 22px rgba(0,0,0,.45); }
+.t9-card.off::before { border-color: rgba(255,255,255,.4); }
+.t9-ribbon { position: absolute; left: 20px; top: -8px; width: 68px; height: 98px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 75%, #fff), var(--accent)); color: #fff; font: 900 38px 'Montserrat'; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%); display: flex; align-items: flex-start; justify-content: center; padding-top: 26px; box-sizing: border-box; text-shadow: 0 2px 0 rgba(0,0,0,.2); z-index: 2; }
+.t9-card.off .t9-ribbon { background: linear-gradient(180deg, #aaa3c4, #8d86a8); }
+.t9-day { position: absolute; right: 22px; top: 16px; font: 800 24px 'Montserrat'; color: color-mix(in srgb, var(--accent) 65%, #fff); letter-spacing: 2px; }
 .t9-card.off .t9-day { color: #6e6890; }
 .t9-text { font: 400 40px/1.2 'Jua'; color: var(--text); text-align: center; padding: 0 26px; margin-top: 44px; margin-bottom: 40px; max-height: 100px; overflow: hidden; }
-.t9-card.off .t9-text { color: #7d7699; }
-.t9-pill { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); background: #fff; border: 3px solid var(--accent); border-radius: 30px; padding: 2px 38px; font: 800 28px 'Montserrat'; color: var(--accent); white-space: nowrap; }
-.t9-card.off .t9-pill { color: #6e6890; border-color: #8d86a8; }
+.t9-card.off .t9-text { color: #6a6388; }
+.t9-pill { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); background: linear-gradient(180deg, #fff, #fff0e0); border: 3px solid var(--accent); border-radius: 30px; padding: 2px 38px; font: 800 28px 'Montserrat'; color: var(--accent); white-space: nowrap; box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+.t9-card.off .t9-pill { color: #6e6890; border-color: #8d86a8; box-shadow: none; }
 
 /* ───── 템플릿 10 · 스탬프 티켓 ───── */
-.t10 { background: var(--bg); }
-.t10-map { position: absolute; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 28px, rgba(120,140,170,.2) 28px 30px); }
+.t10 { background: radial-gradient(ellipse at 20% 20%, #fff, var(--bg) 70%); }
+.t10::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 38px, rgba(110,130,170,.07) 38px 40px), repeating-linear-gradient(90deg, transparent 0 38px, rgba(110,130,170,.07) 38px 40px); }
+.t10-map { position: absolute; border-radius: 50%; background: repeating-radial-gradient(circle, transparent 0 26px, rgba(110,130,170,.2) 26px 28px); }
 .t10-map.m1 { left: -200px; top: 560px; width: 900px; height: 800px; }
 .t10-map.m2 { left: 1300px; top: -300px; width: 900px; height: 800px; }
-.t10-weekly { position: absolute; left: 50%; top: 0; transform: translateX(-50%); background: var(--text); color: #fff; padding: 12px 44px 16px; border-radius: 0 0 14px 14px; font: 800 28px/1.2 'Montserrat'; white-space: nowrap; }
-.t10-title { position: absolute; left: 70px; top: 60px; max-width: 580px; background: var(--text); color: #fff; padding: 6px 28px; border-radius: 8px; font: 900 92px/1.05 'Montserrat'; box-shadow: 8px 8px 0 var(--accent); }
-.t10-stamp { position: absolute; left: 36px; top: 216px; width: 628px; height: 668px; background: #fff; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,.2); outline: 10px dotted var(--bg); outline-offset: -26px; }
-.t10-art { position: absolute; left: 70px; top: 910px; background: #fff; border: 3px solid var(--text); border-radius: 8px; padding: 4px 22px; font: 700 26px 'Noto Sans KR Variable'; color: var(--text); }
+.t10-route { position: absolute; left: 0; top: 0; pointer-events: none; }
+.t10-weekly { position: absolute; left: 50%; top: 0; transform: translateX(-50%); background: var(--text); color: #fff; padding: 8px 46px 16px; border-radius: 0 0 16px 16px; font: 800 30px/1.1 'Montserrat'; white-space: nowrap; text-align: center; box-shadow: 0 8px 14px rgba(0,0,0,.25); }
+.t10-weekly small { display: block; font-size: 15px; letter-spacing: 4px; opacity: .7; }
+.t10-title { position: absolute; left: 70px; top: 56px; max-width: 580px; background: repeating-linear-gradient(135deg, var(--text) 0 14px, color-mix(in srgb, var(--text) 85%, #fff) 14px 28px); color: #fff; padding: 6px 30px; border-radius: 10px; font: 900 92px/1.05 'Montserrat'; box-shadow: 9px 9px 0 var(--accent), 0 18px 24px rgba(0,0,0,.25); border: 4px solid #fff; outline: 4px solid var(--text); }
+.t10-barcode { position: absolute; left: 400px; top: 176px; width: 250px; height: 22px; background: repeating-linear-gradient(90deg, var(--text) 0 3px, transparent 3px 6px, var(--text) 6px 7px, transparent 7px 12px, var(--text) 12px 16px, transparent 16px 18px); opacity: .55; }
+.t10-stamp { position: absolute; left: 40px; top: 214px; width: 616px; height: 672px; background: #fff; box-shadow: 0 14px 28px rgba(60,80,120,.3); }
+.t10-stamp i { position: absolute; display: block; }
+.t10-stamp .h { left: 0; right: 0; height: 14px; background: radial-gradient(circle at 14px 7px, var(--bg) 7px, transparent 7.5px) 0 0/28px 14px repeat-x; }
+.t10-stamp .h.t { top: -7px; } .t10-stamp .h.b { bottom: -7px; }
+.t10-stamp .v { top: 0; bottom: 0; width: 14px; background: radial-gradient(circle at 7px 14px, var(--bg) 7px, transparent 7.5px) 0 0/14px 28px repeat-y; }
+.t10-stamp .v.l { left: -7px; } .t10-stamp .v.r { right: -7px; }
+.t10-postmark { position: absolute; left: 400px; top: 700px; transform: rotate(-16deg); opacity: .5; mix-blend-mode: multiply; pointer-events: none; }
+.t10-art { position: absolute; left: 70px; top: 910px; background: #fff; border: 3px solid var(--text); border-radius: 8px; padding: 4px 22px; font: 700 26px 'Noto Sans KR Variable'; color: var(--text); box-shadow: 4px 4px 0 var(--accent); }
 .t10-rows { position: absolute; left: 720px; top: 100px; width: 1130px; height: 880px; display: flex; flex-direction: column; gap: 16px; }
-.t10-row { flex: 1; display: flex; align-items: center; }
-.t10-ic { width: 104px; height: 100%; background: #fff; border: 5px solid var(--text); border-radius: 10px 0 0 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; gap: 4px; flex-shrink: 0; }
+.t10-row { flex: 1; display: flex; align-items: center; filter: drop-shadow(0 6px 5px rgba(60,80,120,.25)); }
+.t10-ic { width: 108px; height: 100%; background: #fff; border: 5px solid var(--text); border-radius: 12px 0 0 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; gap: 4px; flex-shrink: 0; }
 .t10-ic b { font: 900 42px 'Montserrat'; color: var(--text); }
 .t10-ic small { font: 800 16px 'Montserrat'; color: var(--text); opacity: .7; }
-.t10-bar { flex: 1; height: 100%; display: flex; align-items: center; padding: 0 36px; color: #fff; font: 700 40px 'Noto Sans KR Variable'; box-shadow: inset 0 0 0 4px rgba(255,255,255,.4); text-shadow: 0 2px 0 rgba(0,0,0,.15); }
-.t10-ticket { width: 210px; height: 86%; margin-left: -4px; padding-right: 18px; color: #fff; font: 900 32px/1 'Montserrat'; display: flex; align-items: center; justify-content: center; text-align: center; clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%); border-radius: 12px 0 0 12px; }
+.t10-bar { flex: 1; height: 100%; display: flex; align-items: center; padding: 0 36px; color: #fff; font: 700 40px 'Noto Sans KR Variable'; box-shadow: inset 0 0 0 4px rgba(255,255,255,.35); text-shadow: 0 2px 0 rgba(0,0,0,.18); }
+.t10-bar::after { right: 4%; left: 4%; }
+.t10-bar::before { content: ''; position: absolute; left: 14px; right: 14px; bottom: 10px; border-bottom: 3px dashed rgba(255,255,255,.55); }
+.t10-ticket { width: 214px; height: 86%; margin-left: -4px; padding-right: 20px; color: #fff; font: 900 32px/1 'Montserrat'; display: flex; align-items: center; justify-content: center; text-align: center; clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%); border-radius: 12px 0 0 12px; text-shadow: 0 2px 0 rgba(0,0,0,.2); -webkit-mask: radial-gradient(circle 12px at 0 50%, transparent 98%, #000); mask: radial-gradient(circle 12px at 0 50%, transparent 98%, #000); }
