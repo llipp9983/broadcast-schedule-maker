@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain, protocol, net, Menu } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, protocol, net, Menu, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { pathToFileURL } = require('url');
@@ -11,7 +11,7 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 1400, height: 900, minWidth: 1000, minHeight: 650,
+    width: 1440, height: 900, minWidth: 1180, minHeight: 680,
     title: '방송시간표 메이커', backgroundColor: '#1e1e2a',
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false },
   });
@@ -76,6 +76,7 @@ app.whenReady().then(() => {
     return fs.readFileSync(r.filePaths[0], 'utf8');
   });
   ipcMain.handle('version', () => app.getVersion());
+  ipcMain.handle('reveal', (_e, p) => { if (p) shell.showItemInFolder(p); });
 
   createWindow();
   setupUpdater();

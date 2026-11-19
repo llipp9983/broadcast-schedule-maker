@@ -4,4 +4,5 @@ contextBridge.exposeInMainWorld('api', {
   saveProject: (json) => ipcRenderer.invoke('save-project', json),
   openProject: () => ipcRenderer.invoke('open-project'),
   version: () => ipcRenderer.invoke('version'),
+  reveal: (p) => ipcRenderer.invoke('reveal', p),
 });

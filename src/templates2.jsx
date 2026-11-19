@@ -6,12 +6,12 @@ export const vars = (c) => ({ '--bg': c.bg, '--panel': c.panel, '--accent': c.ac
 export const dayCol = (i) => (i === 5 ? 'var(--sat)' : i === 6 ? 'var(--sun)' : 'var(--accent)');
 
 /** 사진 슬롯: 모양대로 잘린 영역 안에서 사진 이동/크기 조절 */
-export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, clip, radius, children }) {
+export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, onAddPhoto, clip, radius, children }) {
   const ang = ((slot.angle || 0) * Math.PI) / 180;
   const startDrag = (e, mode) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!photo) return;
+    if (!photo) { if (onAddPhoto) onAddPhoto(); return; }
     setSelected(true);
     const sx = e.clientX, sy = e.clientY, p0 = { ...photo };
     const ratio = p0.w / p0.h;
@@ -34,7 +34,7 @@ export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, 
   return (
     <div className="slot" style={{ left: slot.x, top: slot.y, width: slot.w, height: slot.h, transform: slot.angle ? `rotate(${slot.angle}deg)` : undefined }}>
       <div className="slot-clip" style={{ clipPath: clip, borderRadius: radius }} onPointerDown={(e) => startDrag(e, 'move')}>
-        {!photo && <div className="slot-empty noexport">사진을 추가하세요</div>}
+        {!photo && <div className="slot-empty noexport">+ 클릭해서 사진 추가</div>}
         {photo && <img src={photo.src} alt="" draggable={false} style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h }} />}
       </div>
       {children}

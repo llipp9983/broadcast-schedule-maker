@@ -37,7 +37,7 @@ export function Template1({ data }) {
 }
 
 // 템플릿 2: 하늘색 16:9 (1920x1080), 왼쪽 사진, 오른쪽 스케줄 패널 고정
-export function Template2({ data, scale, onPhoto, selected, setSelected }) {
+export function Template2({ data, scale, onPhoto, selected, setSelected, onAddPhoto }) {
   const { sns, badge, rows, colors: c, photo } = data;
 
   const startDrag = (e, mode) => {
@@ -65,6 +65,7 @@ export function Template2({ data, scale, onPhoto, selected, setSelected }) {
   return (
     <div className="canvas t2" style={{ width: 1920, height: 1080, ...V(c) }} onPointerDown={() => setSelected(false)}>
       <div className="t2-sky" />
+      {!photo && <div className="t2-empty noexport" onPointerDown={(e) => { e.stopPropagation(); if (onAddPhoto) onAddPhoto(); }}>+ 클릭해서 배경 사진 추가</div>}
       {photo && (
         <div className="t2-photo" style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h }} onPointerDown={(e) => startDrag(e, 'move')}>
           <img src={photo.src} draggable={false} alt="" />
