@@ -114,3 +114,22 @@ input[type=range] { width: 100%; accent-color: var(--u-ac2); height: 28px; }
 
 /* 템플릿 2 빈 사진 칸 */
 .t2-empty { position: absolute; left: 60px; top: 60px; width: 960px; height: 960px; border: 6px dashed #fff; border-radius: 40px; display: flex; align-items: center; justify-content: center; color: #fff; font: 800 44px 'Noto Sans KR Variable', sans-serif; background: rgba(255,255,255,.18); cursor: pointer; text-shadow: 0 2px 6px rgba(0,0,0,.3); }
+
+/* ───── 스크롤바 (앱 테마에 맞춤) ───── */
+* { scrollbar-width: thin; scrollbar-color: #5b4bb0 transparent; }
+*::-webkit-scrollbar { width: 12px; height: 12px; }
+*::-webkit-scrollbar-track { background: transparent; margin: 6px 0; }
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8f78ff, #5b45d6);
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  min-height: 48px;
+}
+*::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #a794ff, #7a62f5); background-clip: padding-box; border: 2px solid transparent; }
+*::-webkit-scrollbar-thumb:active { background: linear-gradient(180deg, #c0b2ff, #8f78ff); background-clip: padding-box; border: 2px solid transparent; }
+*::-webkit-scrollbar-corner { background: transparent; }
+.ui-gallery::-webkit-scrollbar, .ui-panel-body::-webkit-scrollbar { width: 14px; }
+.ui-gallery::-webkit-scrollbar-track, .ui-panel-body::-webkit-scrollbar-track { background: rgba(255,255,255,.04); border-radius: 10px; margin: 8px 3px; }
+.ui-preview::-webkit-scrollbar { width: 14px; height: 14px; }
+.ui-preview::-webkit-scrollbar-track { background: rgba(0,0,0,.35); border-radius: 10px; margin: 8px; }
