@@ -85,6 +85,7 @@ input[type=date].ui-in { color-scheme: dark; }
 .ui-day-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .ui-in.sub { min-height: 34px; font-size: 13px; color: var(--u-mu); }
 .ui-date { width: 46px; text-align: center; padding: 0; flex-shrink: 0; }
+.ui-icon { width: 66px; padding: 0 4px; flex-shrink: 0; font-size: 13px; }
 .ui-time { width: 74px; text-align: center; padding: 0 4px; flex-shrink: 0; }
 .ui-off { background: var(--u-s2); color: var(--u-mu); border: 1px solid var(--u-line); border-radius: 9px; min-height: 42px; padding: 0 10px; font-weight: 800; font-size: 13px; flex-shrink: 0; }
 .ui-off:hover { background: var(--u-s3); color: var(--u-tx); }

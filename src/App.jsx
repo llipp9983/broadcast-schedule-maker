@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { toPng, toJpeg } from 'html-to-image';
 import { DAYS, DAYS_KO, TEMPLATES, SLOTS, defaultState, loadState, saveState, mergeState } from './state.js';
 import { renderTemplate, sizeOf, TemplateThumb } from './registry.jsx';
+import { LAYOUT13 } from './templates4.jsx';
 
 const COLOR_LABELS = { bg: '배경색', panel: '패널색', accent: '포인트색', text: '글자색', sat: '토요일 색', sun: '일요일 색' };
 const THEMES = [
@@ -72,6 +73,8 @@ export default function App({ mock } = {}) {
   const scale = fit * zoom;
   const colorLabel = (k) => (meta.labels && meta.labels[k]) || COLOR_LABELS[k];
   const hasPhoto = tpl >= 2 && !meta.noPhoto;
+  const LY = { ...LAYOUT13, ...(data.layout || {}) };
+  const setLY = (patch) => upd({ layout: { ...LY, ...patch } });
 
   /* ── 상태 + 되돌리기 ── */
   const setState = useCallback((updater) => {
@@ -360,6 +363,11 @@ export default function App({ mock } = {}) {
                               <input className="ui-in" placeholder="방송 내용" value={r.text} onChange={(e) => setRow(i, { text: e.target.value })} aria-label={`${DAYS_KO[i]} 내용`} />
                             )}
                           </div>
+                          {tpl === 12 && (
+                            <select className="ui-in ui-icon" value={r.icon || 'game'} onChange={(e) => setRow(i, { icon: e.target.value })} aria-label={`${DAYS_KO[i]} 아이콘`}>
+                              <option value="game">게임</option><option value="chat">채팅</option><option value="music">노래</option><option value="none">없음</option>
+                            </select>
+                          )}
                           {!meta.single && <input className="ui-in ui-time" value={r.time} onChange={(e) => setRow(i, { time: e.target.value })} aria-label={`${DAYS_KO[i]} 시간`} />}
                           <button className={'ui-off' + (off ? ' on' : '')} aria-pressed={off} onClick={() => toggleOff(i)} title="이 날은 방송 쉬어요">휴방</button>
                         </div>
@@ -391,10 +399,20 @@ export default function App({ mock } = {}) {
                 {meta.custom && (
                   <section className="ui-box">
                     <div className="ui-h">시간표 배치 <small>배경 위에 올라가는 표</small></div>
-                    <Segmented label="표 위치" value={(data.layout || {}).side || 'right'} onChange={(v) => upd({ layout: { ...data.layout, side: v } })} options={[{ value: 'left', label: '왼쪽' }, { value: 'center', label: '가운데' }, { value: 'right', label: '오른쪽' }]} />
-                    <label className="ui-f" style={{ marginTop: 12 }}><span>표 투명도 {(data.layout || {}).opacity}%</span><input type="range" min="0" max="100" value={(data.layout || {}).opacity} onChange={(e) => upd({ layout: { ...data.layout, opacity: Number(e.target.value) } })} /></label>
-                    <label className="ui-f"><span>표 크기 {(data.layout || {}).scale}%</span><input type="range" min="60" max="110" value={(data.layout || {}).scale} onChange={(e) => upd({ layout: { ...data.layout, scale: Number(e.target.value) } })} /></label>
-                    <label className="ui-f"><span>배경 어둡게 {(data.layout || {}).dim}%</span><input type="range" min="0" max="80" value={(data.layout || {}).dim} onChange={(e) => upd({ layout: { ...data.layout, dim: Number(e.target.value) } })} /></label>
+                    <div className="ui-f"><span>표 스타일</span>
+                      <Segmented label="표 스타일" value={LY.style} onChange={(v) => setLY({ style: v })} options={[{ value: 'glass', label: '유리' }, { value: 'dark', label: '어둡게' }, { value: 'clean', label: '글자만' }, { value: 'sticker', label: '스티커' }]} />
+                    </div>
+                    <div className="ui-f"><span>배치 방식</span>
+                      <Segmented label="배치 방식" value={LY.mode} onChange={(v) => setLY({ mode: v })} options={[{ value: 'list', label: '세로 목록' }, { value: 'strip', label: '가로 카드' }]} />
+                    </div>
+                    <div className="ui-f"><span>표 위치</span>
+                      {LY.mode === 'strip'
+                        ? <Segmented label="표 위치" value={LY.vpos} onChange={(v) => setLY({ vpos: v })} options={[{ value: 'top', label: '위' }, { value: 'bottom', label: '아래' }]} />
+                        : <Segmented label="표 위치" value={LY.side} onChange={(v) => setLY({ side: v })} options={[{ value: 'left', label: '왼쪽' }, { value: 'center', label: '가운데' }, { value: 'right', label: '오른쪽' }]} />}
+                    </div>
+                    <label className="ui-f"><span>표 투명도 {LY.opacity}%</span><input type="range" min="0" max="100" value={LY.opacity} onChange={(e) => setLY({ opacity: Number(e.target.value) })} /></label>
+                    <label className="ui-f"><span>표 크기 {LY.scale}%</span><input type="range" min="60" max="110" value={LY.scale} onChange={(e) => setLY({ scale: Number(e.target.value) })} /></label>
+                    <label className="ui-f"><span>배경 어둡게 {LY.dim}%</span><input type="range" min="0" max="80" value={LY.dim} onChange={(e) => setLY({ dim: Number(e.target.value) })} /></label>
                   </section>
                 )}
                 <section className="ui-box">

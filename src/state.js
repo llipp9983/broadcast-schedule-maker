@@ -58,8 +58,8 @@ export const defaultState = () => ({
   t9: slotTpl('WEEKLY SCHEDULE', { bg: '#3a2f5c', panel: '#ffe6d1', accent: '#f08a24', text: '#7a3d10', sat: '#c9c3dd', sun: '#e5484d' }),
   t10: slotTpl('SCHEDULE', { bg: '#e9eef5', panel: '#ffffff', accent: '#e8935a', text: '#3a2f2a', sat: '#6f8fd0', sun: '#e5484d' }),
   t11: slotTpl('방송 스케줄표', { bg: '#cdeaff', panel: '#ffffff', accent: '#2f9bd8', text: '#2b3b4a', sat: '#2f7be5', sun: '#e5484d' }),
-  t12: slotTpl('STREAMER', { bg: '#04101f', panel: '#0a2a4a', accent: '#2fd6ff', text: '#ffffff', sat: '#ffd23f', sun: '#ff5a6e' }, { caption: 'FAN ART' }),
-  t13: slotTpl('WEEKLY SCHEDULE', { bg: '#8fd3f4', panel: '#ffffff', accent: '#3a7bd9', text: '#26324a', sat: '#2f7be5', sun: '#e5484d' }, { layout: { side: 'right', opacity: 78, scale: 100, dim: 20 } }),
+  t12: slotTpl('STREAMER', { bg: '#04101f', panel: '#0a2a4a', accent: '#2fd6ff', text: '#ffffff', sat: '#ffd23f', sun: '#ff5a6e' }, { caption: 'FAN ART', rows: slotRows().map((r, i) => ({ ...r, icon: ['game', 'chat', 'game', 'music', 'chat', 'game', 'none'][i] })) }),
+  t13: slotTpl('WEEKLY SCHEDULE', { bg: '#8fd3f4', panel: '#ffffff', accent: '#3a7bd9', text: '#26324a', sat: '#2f7be5', sun: '#e5484d' }, { layout: { style: 'glass', mode: 'list', side: 'right', vpos: 'bottom', opacity: 78, scale: 100, dim: 20 } }),
   t7: slotTpl('주간 스케줄', { bg: '#fdf6f0', panel: '#ffffff', accent: '#b9a6f2', text: '#5a4690', sat: '#4f7bff', sun: '#ff5c7a' }),
 });
 
