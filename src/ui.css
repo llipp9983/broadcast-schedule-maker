@@ -25,6 +25,8 @@ body { background: var(--u-bg); color: var(--u-tx); font-size: 15px; user-select
 .ui-btn.primary { background: var(--u-ac); border-color: var(--u-ac); color: #fff; padding: 0 20px; }
 .ui-btn.primary:hover:not(:disabled) { background: #7d60ff; }
 .ui-btn kbd { font: 600 11px 'Noto Sans KR Variable', sans-serif; background: rgba(255,255,255,.2); border-radius: 5px; padding: 2px 6px; }
+.ui-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ui-btn.on { background: var(--u-ac); border-color: var(--u-ac2); color: #fff; }
 .ui-btn.small { min-height: 38px; padding: 0 14px; font-size: 14px; }
 .ui-btn.danger { color: #ffb4b4; }
 

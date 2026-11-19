@@ -5,6 +5,14 @@ import { Star, Heart, Cloud, Paw, Ears, Flower, Bolt, Twinkle } from './decor.js
 export const vars = (c) => ({ '--bg': c.bg, '--panel': c.panel, '--accent': c.accent, '--text': c.text, '--sat': c.sat, '--sun': c.sun });
 export const dayCol = (i) => (i === 5 ? 'var(--sat)' : i === 6 ? 'var(--sun)' : 'var(--accent)');
 
+/** 사진 회전/반전 CSS */
+export const photoTransform = (p) => {
+  const parts = [];
+  if (p.rot) parts.push(`rotate(${p.rot}deg)`);
+  if (p.flipX || p.flipY) parts.push(`scale(${p.flipX ? -1 : 1}, ${p.flipY ? -1 : 1})`);
+  return parts.length ? parts.join(' ') : undefined;
+};
+
 /** 사진 슬롯: 모양대로 잘린 영역 안에서 사진 이동/크기 조절 */
 export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, onAddPhoto, clip, radius, children }) {
   const ang = ((slot.angle || 0) * Math.PI) / 180;
@@ -22,9 +30,19 @@ export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, 
       if (mode === 'move') onPhoto({ ...p0, x: p0.x + dx, y: p0.y + dy });
       else {
         const sgn = mode.includes('e') ? 1 : -1;
-        const w = Math.max(60, p0.w + sgn * dx);
-        const h = w / ratio;
-        onPhoto({ ...p0, w, h, x: mode.includes('w') ? p0.x + (p0.w - w) : p0.x, y: mode.includes('n') ? p0.y + (p0.h - h) : p0.y });
+        const rot0 = p0.rot || 0;
+        if (!rot0) {
+          const w = Math.max(60, p0.w + sgn * dx);
+          const h = w / ratio;
+          onPhoto({ ...p0, w, h, x: mode.includes('w') ? p0.x + (p0.w - w) : p0.x, y: mode.includes('n') ? p0.y + (p0.h - h) : p0.y });
+        } else {
+          // 회전된 사진은 중심을 기준으로 크기 조절
+          const tr = ang + (rot0 * Math.PI) / 180;
+          const rx = sdx * Math.cos(tr) + sdy * Math.sin(tr);
+          const w = Math.max(60, p0.w + 2 * sgn * rx);
+          const h = w / ratio;
+          onPhoto({ ...p0, w, h, x: p0.x + p0.w / 2 - w / 2, y: p0.y + p0.h / 2 - h / 2 });
+        }
       }
     };
     const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
@@ -35,11 +53,11 @@ export function PhotoSlot({ slot, photo, scale, onPhoto, selected, setSelected, 
     <div className="slot" style={{ left: slot.x, top: slot.y, width: slot.w, height: slot.h, transform: slot.angle ? `rotate(${slot.angle}deg)` : undefined }}>
       <div className="slot-clip" style={{ clipPath: clip, borderRadius: radius }} onPointerDown={(e) => startDrag(e, 'move')}>
         {!photo && <div className="slot-empty noexport">+ 클릭해서 사진 추가</div>}
-        {photo && <img src={photo.src} alt="" draggable={false} style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h }} />}
+        {photo && <img src={photo.src} alt="" draggable={false} style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h, transform: photoTransform(photo) }} />}
       </div>
       {children}
       {selected && photo && (
-        <div className="slot-sel noexport" style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h }}>
+        <div className="slot-sel noexport" style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h, transform: photo.rot ? `rotate(${photo.rot}deg)` : undefined }}>
           {['nw', 'ne', 'sw', 'se'].map((m) => <div key={m} className={`handle ${m}`} onPointerDown={(e) => startDrag(e, m)} />)}
         </div>
       )}

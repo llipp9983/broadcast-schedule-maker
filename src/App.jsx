@@ -176,6 +176,8 @@ export default function App({ mock } = {}) {
     const w = bw * (pct / 100), h = w * (photo.h / photo.w);
     setPhoto({ ...photo, bw, w, h, x: photo.x + (photo.w - w) / 2, y: photo.y + (photo.h - h) / 2 });
   };
+  const setRot = (deg) => photo && setPhoto({ ...photo, rot: ((((Math.round(deg) + 180) % 360) + 360) % 360) - 180 });
+  const flip = (axis) => photo && setPhoto({ ...photo, [axis]: !photo[axis] });
   const fitPhoto = () => {
     if (!photo) return;
     const area = SLOTS[tpl]; const ratioP = photo.w / photo.h;
@@ -442,8 +444,20 @@ export default function App({ mock } = {}) {
                       <button className="ui-btn small" onClick={fitPhoto}>칸에 맞추기</button>
                       <button className="ui-btn small danger" onClick={() => { setPhoto(null); setSelected(false); }}>삭제</button>
                     </div>
-                    <label className="ui-f"><span>크기 {photoPct}%</span><input type="range" min="50" max="300" value={photoPct} onChange={(e) => setPhotoPct(Number(e.target.value))} /></label>
-                    <p className="ui-note">미리보기에서 사진을 끌어 위치를 옮기고, 모서리 점으로도 크기를 바꿀 수 있어요.</p>
+                    <div className="ui-f"><span>회전·반전</span>
+                      <div className="ui-tools">
+                        <button className="ui-btn small" onClick={() => setRot((photo.rot || 0) - 90)} title="왼쪽으로 90도">↺ 90°</button>
+                        <button className="ui-btn small" onClick={() => setRot((photo.rot || 0) + 90)} title="오른쪽으로 90도">↻ 90°</button>
+                        <button className={'ui-btn small' + (photo.flipX ? ' on' : '')} aria-pressed={!!photo.flipX} onClick={() => flip('flipX')} title="좌우 반전">⇋ 좌우</button>
+                        <button className={'ui-btn small' + (photo.flipY ? ' on' : '')} aria-pressed={!!photo.flipY} onClick={() => flip('flipY')} title="상하 반전">⇅ 상하</button>
+                      </div>
+                    </div>
+                    <label className="ui-f"><span>각도 {photo.rot || 0}°</span>
+                      <input type="range" min="-180" max="180" value={photo.rot || 0} onChange={(e) => setRot(Number(e.target.value))} />
+                    </label>
+                    <div className="ui-row"><button className="ui-btn small" onClick={() => setPhoto({ ...photo, rot: 0, flipX: false, flipY: false })}>회전·반전 초기화</button></div>
+                    <label className="ui-f" style={{ marginTop: 10 }}><span>크기 {photoPct}%</span><input type="range" min="50" max="300" value={photoPct} onChange={(e) => setPhotoPct(Number(e.target.value))} /></label>
+                    <p className="ui-note">미리보기에서 사진을 끌어 위치를 옮기고, 모서리 점으로도 크기를 바꿀 수 있어요. 회전하면 빈 곳이 생길 수 있으니 크기를 키워 맞춰 주세요.</p>
                   </>
                 )}
               </section>

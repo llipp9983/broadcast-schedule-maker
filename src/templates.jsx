@@ -1,6 +1,7 @@
 import React from 'react';
 import { DAYS } from './state.js';
 import { Star, Heart, Cloud, Twinkle } from './decor.jsx';
+import { photoTransform } from './templates2.jsx';
 
 const V = (c) => ({ '--bg': c.bg, '--panel': c.panel, '--accent': c.accent, '--text': c.text, '--sat': c.sat, '--sun': c.sun });
 const dayColor = (i) => (i === 5 ? 'var(--sat)' : i === 6 ? 'var(--sun)' : 'var(--text)');
@@ -50,11 +51,20 @@ export function Template2({ data, scale, onPhoto, selected, setSelected, onAddPh
       if (mode === 'move') onPhoto({ ...p0, x: p0.x + dx, y: p0.y + dy });
       else {
         const sgnX = mode.includes('e') ? 1 : -1;
-        const w = Math.max(60, p0.w + sgnX * dx);
-        const h = w / ratio;
-        const x = mode.includes('w') ? p0.x + (p0.w - w) : p0.x;
-        const y = mode.includes('n') ? p0.y + (p0.h - h) : p0.y;
-        onPhoto({ ...p0, x, y, w, h });
+        const rot0 = p0.rot || 0;
+        if (!rot0) {
+          const w = Math.max(60, p0.w + sgnX * dx);
+          const h = w / ratio;
+          const x = mode.includes('w') ? p0.x + (p0.w - w) : p0.x;
+          const y = mode.includes('n') ? p0.y + (p0.h - h) : p0.y;
+          onPhoto({ ...p0, x, y, w, h });
+        } else {
+          const r = (rot0 * Math.PI) / 180;
+          const rx = dx * Math.cos(r) + dy * Math.sin(r);
+          const w = Math.max(60, p0.w + 2 * sgnX * rx);
+          const h = w / ratio;
+          onPhoto({ ...p0, w, h, x: p0.x + p0.w / 2 - w / 2, y: p0.y + p0.h / 2 - h / 2 });
+        }
       }
     };
     const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
@@ -67,8 +77,8 @@ export function Template2({ data, scale, onPhoto, selected, setSelected, onAddPh
       <div className="t2-sky" />
       {!photo && <div className="t2-empty noexport" onPointerDown={(e) => { e.stopPropagation(); if (onAddPhoto) onAddPhoto(); }}>+ 클릭해서 배경 사진 추가</div>}
       {photo && (
-        <div className="t2-photo" style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h }} onPointerDown={(e) => startDrag(e, 'move')}>
-          <img src={photo.src} draggable={false} alt="" />
+        <div className="t2-photo" style={{ left: photo.x, top: photo.y, width: photo.w, height: photo.h, transform: photo.rot ? `rotate(${photo.rot}deg)` : undefined }} onPointerDown={(e) => startDrag(e, 'move')}>
+          <img src={photo.src} draggable={false} alt="" style={{ transform: (photo.flipX || photo.flipY) ? `scale(${photo.flipX ? -1 : 1}, ${photo.flipY ? -1 : 1})` : undefined }} />
           {selected && (
             <>
               <div className="sel noexport" />
