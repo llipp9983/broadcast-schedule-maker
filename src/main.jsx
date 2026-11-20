@@ -10,4 +10,6 @@ import './styles4.css';
 import './styles5.css';
 import './ui.css';
 import App from './App.jsx';
+import { installWebApi } from './webApi.js';
+installWebApi();
 createRoot(document.getElementById('root')).render(<App />);

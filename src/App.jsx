@@ -213,7 +213,7 @@ export default function App({ mock } = {}) {
     try {
       const url = await render(format);
       const p = await window.api.saveImage(url, 'schedule-' + tpl);
-      if (p) showToast('저장했어요', { label: '폴더 열기', run: () => window.api.reveal(p) });
+      if (p) showToast(window.api.isWeb ? '다운로드했어요 (브라우저 다운로드 폴더)' : '저장했어요', window.api.isWeb ? null : { label: '폴더 열기', run: () => window.api.reveal(p) });
     } catch (e) { showToast('저장 실패: ' + e.message); }
     setBusy(false);
   };
@@ -269,7 +269,7 @@ export default function App({ mock } = {}) {
 
       {/* 상단 바 */}
       <header className="ui-top">
-        <div className="ui-brand"><span className="ui-logo" aria-hidden="true">▦</span><b>방송시간표 메이커</b><small>v{version}</small></div>
+        <div className="ui-brand"><span className="ui-logo" aria-hidden="true">▦</span><b>방송시간표 메이커</b><small>{version === 'web' ? '웹 버전' : 'v' + version}</small></div>
         <div className="ui-top-actions">
           <button className="ui-ibtn" onClick={undo} disabled={!past.current.length} title="되돌리기 (Ctrl+Z)" aria-label="되돌리기">↶ <span>되돌리기</span></button>
           <button className="ui-ibtn" onClick={redo} disabled={!future.current.length} title="다시 실행 (Ctrl+Y)" aria-label="다시 실행">↷</button>
